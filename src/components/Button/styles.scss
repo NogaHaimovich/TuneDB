@@ -1,0 +1,36 @@
+.ui-btn {
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &.primary {
+    background: linear-gradient(90deg, var(--medium-blue), #5e55b3);
+    color: #fff;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  &.secondary {
+    background: #fff;
+    color: #333;
+
+    &:hover {
+      background: #f0f0f0;
+    }
+  }
+
+  &.dark {
+    background: #333;
+    color: #fff;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}

@@ -1,0 +1,70 @@
+.disc {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100vw;
+  height: 100vw;
+  border-radius: 50%;
+  z-index:1;
+
+  background: repeating-radial-gradient(
+    circle,
+    #000 0px,
+    #000 2px,
+    #111 3px,
+    #111 4px
+  );
+
+  &__label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30%;
+    height: 30%;
+    background-color: var(--medium-blue);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__hole {
+    width: 10%;
+    height: 10%;
+    background-color: black;
+    border-radius: 50%;
+  }
+
+  &--right {
+    right: 0;
+    animation: slideSpinRight 2s ease-out forwards;
+  }
+
+  &--left {
+    left: 0;
+    animation: slideSpinLeft 2s ease-out forwards;
+  }
+}
+
+@keyframes slideSpinRight {
+  from {
+    right: -150%;
+    transform: translateY(-50%) rotate(0deg);
+  }
+  to {
+    right: 0%;
+    transform: translateY(-50%) rotate(1080deg);
+  }
+}
+
+@keyframes slideSpinLeft {
+  from {
+    left:-50%;
+    transform: translateY(-50%) rotate(-1080deg);
+  }
+  to {
+    left: 50%;
+    transform: translateY(-50%) rotate(1080deg);
+  }
+}

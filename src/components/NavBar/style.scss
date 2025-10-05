@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Fondamento&family=Dancing+Script&display=swap');
+
+.navbar {
+  &__container {
+    position: fixed;           
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    padding: 0 50px;              
+    box-sizing: border-box;
+    background-color: var(--dark-blue);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 100;
+    top: 0;             
+  }
+
+  &__title {
+    font-size: 64px;
+    color: var(--light-blue);
+    line-height: 1;
+    margin-left: 0;                
+    z-index: 1;
+    text-decoration: none;
+
+
+    &--tune {
+      font-family: 'Fondamento', cursive;
+      
+    }
+
+    &--db {
+      font-family: 'Dancing Script', cursive;
+    }
+  }
+
+  &__search {
+    position: absolute;            
+    left: 50%;
+    transform: translateX(-50%);   
+    width: 400px;
+    max-width: 90%;                
+    z-index: 1;
+
+    .searchbar__container {
+      width: 100%;
+      background-color: var(--medium-blue);
+      border: 1px solid var(--light-blue);
+      border-radius: 25px;
+      padding: 8px 16px;
+      backdrop-filter: blur(10px);
+
+      .searchbar__input {
+        .MuiInputBase-input {
+          color: white;
+          font-size: 16px;
+
+          &::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+          }
+        }
+
+        .MuiInputLabel-root {
+          color: rgba(255, 255, 255, 0.7);
+
+          &.Mui-focused {
+            color: var(--light-blue);
+          }
+        }
+      }
+
+      .searchbar__icon {
+        color: rgba(255, 255, 255, 0.7);
+      }
+    }
+  }
+
+  &__buttons {
+    margin-left: auto;              
+    display: flex;
+    gap: 40px;
+
+    a {
+      color: var(--light-blue);
+      font-size: 32px;
+      font-family: 'Fondamento', cursive;
+      text-decoration: none;
+    }
+  }
+}

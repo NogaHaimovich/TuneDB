@@ -1,0 +1,38 @@
+.add_to_playlist_button{
+    background-color: transparent;
+    height: 70px;
+    width: 80px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+
+    &:hover:not(:disabled) {
+        transform: scale(1.1);
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+
+    &.added {
+        svg {
+            fill: #4CAF50;
+        }
+    }
+
+    .icon{
+        height: 50px;
+        width: 50px;
+    }
+
+    .loading-text {
+        font-size: 10px;
+        margin-top: 2px;
+        color: #666;
+    }
+}

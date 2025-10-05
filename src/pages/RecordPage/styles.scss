@@ -1,0 +1,59 @@
+.record_page{
+    padding-top: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &_album_cover{
+        height: 400px;
+        width: 400px;
+        border-radius: 20px;
+    }
+
+    &_title{
+        font-size: 48px;
+        font-weight: bold;
+        margin-bottom: 40px;
+    }
+
+    &_main{
+        display: flex;
+        gap: 100px;
+        align-items: flex-start;
+        padding-top: 40px;
+    }
+
+    &_artist-data{
+        &_image{
+            height: 250px;
+            width: 250px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    }
+
+    &_info{
+        display: flex;
+        flex-direction: column;
+        gap: 30px; 
+    }
+
+    &_data{
+        font-size: 28px;
+        margin: 0;
+
+        a {
+            font-size: 32px;
+            text-decoration: none;
+            color: var(--medium-blue);
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+
+}
+
