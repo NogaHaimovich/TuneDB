@@ -1,0 +1,17 @@
+# Netlify configuration file
+[build]
+  # Build command
+  command = "npm run build"
+  # Directory that contains the build output
+  publish = "dist"
+
+# Redirect all requests to index.html for SPA routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Optional: set Node version (if needed)
+[build.environment]
+  NODE_VERSION = "20"
+
