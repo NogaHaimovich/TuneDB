@@ -1,4 +1,3 @@
-import React from "react";
 import useData from "../../hooks/useData";
 import "./styles.scss";
 import { Link, useParams } from "react-router-dom";
