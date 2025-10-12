@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import type { UseDataReturn } from '../types/api';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
 const useData = <T = any>(endpoint: string, delay: number = 0): UseDataReturn<T> => {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState<boolean>(false); 
@@ -21,7 +23,7 @@ const useData = <T = any>(endpoint: string, delay: number = 0): UseDataReturn<T>
       setLoading(true);
       setError(null);
 
-      const response = await fetch(`http://localhost:5000${endpoint}`, {
+      const response = await fetch(`${API_URL}${endpoint}`, {
         signal: abortControllerRef.current.signal,
       });
 
