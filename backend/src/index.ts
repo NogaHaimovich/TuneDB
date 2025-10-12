@@ -1,15 +1,16 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import deezerRoutes from "./routes/deezer.routes.js"
 import userRoutes from "./routes/user.routes.js"
 import playlistRoutes from "./routes/playlist.routes.js"
 import cors from "cors";
 import connectDB from "./db/db.js";
-import dotenv from "dotenv";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-dotenv.config();
 connectDB();
 
 const allowedOrigins = [
