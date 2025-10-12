@@ -14,4 +14,5 @@
 # Optional: set Node version (if needed)
 [build.environment]
   NODE_VERSION = "20"
+  VITE_API_URL = "https://tunedb.onrender.com/api"
 
