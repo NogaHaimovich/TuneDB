@@ -2,6 +2,11 @@
 
 A modern music discovery and playlist management application built with React, TypeScript, and Node.js. TuneDB integrates with the Deezer API to provide users with access to top-rated songs, artists, albums, and the ability to create and manage personal playlists.
 
+## 🌐 Live Demo
+
+Check out the live application: **[https://tunedb.netlify.app/](https://tunedb.netlify.app/)**
+
+
 ## ✨ Features
 
 - 🎶 **Music Discovery**: Browse top-rated songs, artists, and fresh releases
