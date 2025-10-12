@@ -5,6 +5,7 @@ import SignUpPage from "../../pages/SignupPage";
 import SearchResultsPage from "../../pages/SearchResultsPage";
 import AlbumPage from "../../pages/AlbumPage";
 import ArtistPage from "../../pages/ArtistPage";
+import RecordPage from '../../pages/RecordPage';
 
 
 const PublicRoutes = () => {
@@ -16,6 +17,7 @@ const PublicRoutes = () => {
         <Route path="/search/:query" element={<SearchResultsPage/>}/>
         <Route path="/artist/:id" element={<ArtistPage/>}/>
         <Route path="/album/:id" element={<AlbumPage/>}/>
+        <Route path="/record/:id" element={<RecordPage />} />
     </Routes>
   )
 }
