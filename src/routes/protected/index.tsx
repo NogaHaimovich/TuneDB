@@ -6,25 +6,27 @@ import MyPlaylistsPage from "../../pages/MyPlayListsPage";
 import LogOut from "../../pages/LogOutPage";
 
 const ProtectedRoutes = () => {
-  return (
-    <>
+  return [
       <Route 
+        key="playlist"
         path="/playlist/:name" 
         element={
           <ProtectedRoute>
             <PlaylistPage />
           </ProtectedRoute>
         } 
-      />
+      />,
       <Route 
+        key="playlists"
         path="/playlists" 
         element={
           <ProtectedRoute>
             <MyPlaylistsPage />
           </ProtectedRoute>
         } 
-      />
+      />,
       <Route 
+        key="signout"
         path="/signout" 
         element={
           <ProtectedRoute>
@@ -32,8 +34,7 @@ const ProtectedRoutes = () => {
           </ProtectedRoute>
         } 
       />
-    </>
-  );
+  ];
 };
 
 export default ProtectedRoutes;

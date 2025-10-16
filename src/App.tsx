@@ -33,8 +33,8 @@ function App() {
           <NavBar />
           <main>
             <Routes>
-              <PublicRoutes />
-              <ProtectedRoutes />
+              {PublicRoutes()}
+              {ProtectedRoutes()}
             </Routes>
           </main>
         </div>

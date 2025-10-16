@@ -8,16 +8,14 @@ import ArtistPage from "../../pages/ArtistPage";
 import RecordPage from '../../pages/RecordPage';
 
 const PublicRoutes = () => {
-  return (
-    <>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/search/:query" element={<SearchResultsPage/>}/>
-        <Route path="/artist/:id" element={<ArtistPage/>}/>
-        <Route path="/album/:id" element={<AlbumPage/>}/>
-        <Route path="/record/:id" element={<RecordPage />} />
-    </>
-  )
+  return [
+        <Route key="home" path="/" element={<HomePage />} />,
+        <Route key="signin" path="/signin" element={<SignIn />} />,
+        <Route key="signup" path="/signup" element={<SignUpPage />} />,
+        <Route key="search" path="/search/:query" element={<SearchResultsPage/>}/>,
+        <Route key="artist" path="/artist/:id" element={<ArtistPage/>}/>,
+        <Route key="album" path="/album/:id" element={<AlbumPage/>}/>,
+        <Route key="record" path="/record/:id" element={<RecordPage />} />
+  ]
 }
 export default PublicRoutes 
