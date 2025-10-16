@@ -8,9 +8,9 @@ import type { CardProps } from "../../components/Card";
 
 
 const HomePage = () => {
-  const { data: topSongsData, loading: topSongsLoading } = useData<TopSongsResponse>("/topRatedSongs?limit=5");
-  const { data: topArtistsData, loading: topArtistsLoading } = useData<TopArtistsResponse>("/topRatedArtists?limit=5");
-  const { data: newSongsData, loading: newSongsLoading } = useData<NewSongsResponse>("/newSongs?limit=5");
+  const { data: topSongsData, loading: topSongsLoading } = useData<TopSongsResponse>("/deezer/topRatedSongs?limit=5");
+  const { data: topArtistsData, loading: topArtistsLoading } = useData<TopArtistsResponse>("/deezer/topRatedArtists?limit=5");
+  const { data: newSongsData, loading: newSongsLoading } = useData<NewSongsResponse>("/deezer/newSongs?limit=5");
 
   const topSongsCards: CardProps[] = topSongsData?.tracks?.map((song: Song) => ({
     title: song.songName,

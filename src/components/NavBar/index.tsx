@@ -32,7 +32,7 @@ const NavBar: React.FC = () => {
         {!user && <Link to="/signin">Signin</Link>}
         {user && (
           <>
-            <Link to="/favorites">Favorites</Link>
+            <Link to="/playlist/favorites">Favorites</Link>
             <Link to="/playlists">My Playlists</Link>
             <Link to="/signout">Signout</Link>
           </>

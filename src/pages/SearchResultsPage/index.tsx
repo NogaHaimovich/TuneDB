@@ -7,7 +7,7 @@ const SearchResultsPage = () => {
   const { query } = useParams<{ query: string }>();
 
   const { data, loading, error } = useData(
-    query ? `/search?q=${encodeURIComponent(query)}` : ""
+    query ? `/deezer/search?q=${encodeURIComponent(query)}` : ""
   );
 
   const tracks: SimplifiedTrack[] = data?.data?.map((track: any) => ({

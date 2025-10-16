@@ -39,7 +39,7 @@ const SearchBar = () => {
   const navigate = useNavigate();
 
   const { data: suggestions, loading: loadingSuggestions } = useData(
-    search.trim() ? `/suggest?q=${encodeURIComponent(search)}` : "",
+    search.trim() ? `/deezer/suggest?q=${encodeURIComponent(search)}` : "",
     300
   );
 

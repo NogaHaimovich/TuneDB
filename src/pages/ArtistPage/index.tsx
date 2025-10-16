@@ -8,7 +8,7 @@ const ArtistPage = () => {
   const { id: artist_id } = useParams<{ id: string }>();
 
   const { data, loading, error } = useData<SimplifiedArtist>(
-    artist_id ? `/artist?id=${encodeURIComponent(artist_id)}` : ""
+    artist_id ? `/deezer/artist?id=${encodeURIComponent(artist_id)}` : ""
   );
 
   if (!artist_id) return <p>No artist ID provided.</p>;

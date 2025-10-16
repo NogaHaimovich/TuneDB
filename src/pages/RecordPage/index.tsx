@@ -9,7 +9,7 @@ const RecordPage = () => {
     const { id: record_id } = useParams<{ id: string }>();
 
     const { data, loading, error } = useData(
-        record_id ? `/record?id=${encodeURIComponent(record_id)}` : ""
+        record_id ? `/deezer/record?id=${encodeURIComponent(record_id)}` : ""
     );
 
     const record: SimplifiedRecord | null = data

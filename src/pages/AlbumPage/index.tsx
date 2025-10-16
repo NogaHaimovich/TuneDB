@@ -8,7 +8,7 @@ const AlbumPage = () => {
   const { id: album_id } = useParams<{ id: string }>();
 
   const { data, loading, error } = useData(
-    album_id ? `/album?id=${encodeURIComponent(album_id)}` : ""
+    album_id ? `/deezer/album?id=${encodeURIComponent(album_id)}` : ""
   );
 
   const album: SimplifiedAlbum | null = data

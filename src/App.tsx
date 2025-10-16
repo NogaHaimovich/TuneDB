@@ -8,7 +8,6 @@ import './App.css';
 import './styles/settings.scss';
 import { getUser } from "./Services/userService";
 import PublicRoutes from "./routes/public";
-import ProtectedRoutes from "./routes/protected";
 
 function App() {
   const [user, setUser] = useState(getUser()); 
@@ -33,7 +32,6 @@ function App() {
           <NavBar />
           <main>
             <PublicRoutes />
-            <ProtectedRoutes />
           </main>
         </div>
       </BrowserRouter>
