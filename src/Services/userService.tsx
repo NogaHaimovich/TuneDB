@@ -4,7 +4,6 @@ import type { SignInForm, SignUpForm, UserPayload, AuthResponse } from "../types
 
 const tokenName = "token";
 
-// Re-export for backward compatibility
 export type { UserPayload, AuthResponse };
 
 export async function signup(user: SignUpForm): Promise<AuthResponse> {

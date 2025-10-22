@@ -1,12 +1,13 @@
 import { Router } from "express";
 import { authMiddleware } from "../middleware/auth.js";
-import { getUserPlaylists, addTrackToPlaylist, createPlaylist } from "../services/playlist.service.js";
+import { getUserPlaylists, addTrackToPlaylist, createPlaylist, getPlaylistSongs } from "../services/playlist.service.js";
 
 const router = Router();
 
 router.get("/", authMiddleware, async (req, res) => {
   try {
     const playlists = await getUserPlaylists(req.user!.id);
+    console.log(playlists)
     res.json(playlists);
   } catch (err) {
     res.status(500).json({ error: "Server error" });
@@ -68,6 +69,28 @@ router.post("/create", authMiddleware, async (req, res) => {
   } catch (err: any) {
     console.error("Create playlist error:", err);
     return res.status(500).json({ error: err.message });
+  }
+});
+
+router.get("/allPlaylistsData", authMiddleware, async (req, res) => {
+  try {
+    const userId = req.user!.id;
+    console.log(userId)
+    const playlistNames = await getUserPlaylists(userId);
+    const playlistsWithTracks = await Promise.all(
+      playlistNames.map(async (name) => {
+        const playlist = await getPlaylistSongs(userId, name);
+        return {
+          name,
+          tracks: playlist || []
+        };
+      })
+    );
+    console.log(playlistsWithTracks)
+    res.status(200).json({ playlists: playlistsWithTracks });
+  } catch (err) {
+    console.error("Error fetching playlists:", err);
+    res.status(500).json({ error: "Server error" });
   }
 });
 

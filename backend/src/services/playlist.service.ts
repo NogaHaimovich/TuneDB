@@ -9,7 +9,7 @@ const getUserPlaylists = async (userId: string) => {
 
   if (!user.playlists || user.playlists.length === 0) {
     user.playlists = [{
-      name: "favorite",
+      name: "Favorites",
       tracks: []
     }] as any;
     await user.save();
@@ -42,7 +42,6 @@ const addTrackToPlaylist = async (
 
   if (!playlist) {
     console.log("Playlist not found, creating new one:", playlistName);
-    // Create the playlist if it doesn't exist
     user.playlists.push({
       name: playlistName,
       tracks: []
@@ -96,4 +95,15 @@ const createPlaylist = async (userId: string, playlistName: string) => {
   return user.playlists[user.playlists.length - 1];
 };
 
-export { getUserPlaylists, addTrackToPlaylist, createPlaylist };
+const getPlaylistSongs = async (userId: string, playlistName: string) => {
+  const objectId = new mongoose.Types.ObjectId(userId);
+  const user = await User.findById(objectId).select("playlists");
+  if (!user) throw new Error("User not found");
+
+  const playlist = user.playlists?.find((p) => p.name === playlistName);
+  if (!playlist) throw new Error("Playlist not found");
+
+  return playlist.tracks || [];
+};
+
+export { getUserPlaylists, addTrackToPlaylist, createPlaylist, getPlaylistSongs };

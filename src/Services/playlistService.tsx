@@ -8,6 +8,24 @@ export interface AddToPlaylistRequest {
   image?: string;
 }
 
+export interface PlaylistTrack {
+  trackId: string;
+  title?: string;
+  artist?: string;
+  album?: string;
+  image?: string;
+}
+
+export interface PlaylistWithTracks {
+  name: string;
+  tracks: PlaylistTrack[];
+}
+
+export interface AllPlaylistsResponse {
+  playlists: PlaylistWithTracks[];
+}
+
+
 export const addToPlaylist = async (trackId: string, trackData: Omit<AddToPlaylistRequest, 'trackId'>, playlistName: string = 'favorite') => {
   try {
     const response = await apiClient.post(`/playlist/${trackId}`, {
@@ -39,6 +57,16 @@ export const createPlaylist = async (playlistName: string) => {
     return response.data;
   } catch (error) {
     console.error('Error creating playlist:', error);
+    throw error;
+  }
+};
+
+export const getAllPlaylistsData = async (): Promise<AllPlaylistsResponse> => {
+  try {
+    const { data } = await apiClient.get<AllPlaylistsResponse>('/playlist/allPlaylistsData');
+    return data;
+  } catch (error) {
+    console.error('Error fetching data for playlists', error);
     throw error;
   }
 };

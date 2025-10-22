@@ -3,7 +3,6 @@ import SkeletonCard from "./SkeletonCard";
 import { Link } from "react-router-dom";
 import type { CardProps, CardType } from "../../types/components";
 
-// Re-export for backward compatibility
 export type { CardType, CardProps };
 
 const Card = ({ title, image, id, type }: CardProps) => {
