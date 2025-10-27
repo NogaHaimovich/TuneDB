@@ -70,3 +70,28 @@ export const getAllPlaylistsData = async (): Promise<AllPlaylistsResponse> => {
     throw error;
   }
 };
+
+export const removePlaylistClicked = async (playlistName: string) => {
+  try {
+    const response = await apiClient.delete(`/playlist/removePlaylist`, {
+      params: { playlistName },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(`Error removing playlist "${playlistName}":`, error);
+    throw error;
+  }
+};
+
+export const renamePlaylist = async(oldName: string, newName: string) =>{
+  try {
+    const response = await apiClient.put("/playlist/renamePlaylist", {
+      oldName,
+      newName
+    });
+    return response.data
+  } catch (error){ 
+    console.error(`Error renaming playlist "${oldName}":`, error);
+    throw error;
+  }
+}
