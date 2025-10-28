@@ -1,0 +1,129 @@
+.playlist_card {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 16px;
+            padding: 1.5rem 3rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease;
+
+            .playlist_header {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                margin-bottom: 1rem;
+
+                .playlist_title_row {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    position: relative;
+
+                    .playlist_name {
+                        font-size: 2rem;
+                        font-weight: 600;
+                        color: var(--dark-blue);
+                        text-decoration: none;
+                        transition: color 0.2s ease;
+
+                        &:hover {
+                        color: var(--medium-blue);
+                        }
+                    }
+
+                    .edit_playlist_btn {
+                        background: transparent;
+                        border: none;
+                        color: #333;
+                        width: 36px;
+                        height: 36px;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        font-size: 1.1rem;
+                        line-height: 1;
+                        position: absolute;
+                        right: -40px;
+
+                        &:hover {
+                        background: rgba(0, 0, 0, 0.05);
+                        transform: scale(1.1);
+                        }
+
+                        &:active {
+                        transform: scale(0.95);
+                        }
+                    }
+                }
+
+            .track_count {
+            font-size: 1.2rem;
+            color: var(--medium-blue);
+            font-weight: 500;
+            margin-top: 0.3rem;
+            }
+        }
+
+            .tracks_list {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 1.5rem;
+                overflow-x: auto;
+                padding-bottom: 1rem;
+                scroll-behavior: smooth;
+
+                &::-webkit-scrollbar {
+                    height: 8px;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    background: var(--light-blue);
+                    border-radius: 4px;
+                }
+
+                .track_item {
+                    list-style: none;
+                    padding-top:10px ;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    text-align: center;
+                    min-width: 180px;
+                    transition: transform 0.2s ease;
+
+                    &:hover {
+                        transform: scale(1.05);
+                    }
+
+                    .card {
+                        .card__title {
+                            font-size: 20px !important;
+                        }
+                    }
+                }
+            }
+
+        .buttons_line {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+
+            .ui-btn.see_more_btn {
+            font-size: 1rem !important;
+            padding: 0.75rem 2rem !important;
+            }
+
+            .ui-btn.delete_playlist_btn {
+            font-size: 0.85rem !important;
+            }
+    }
+}
+
+
+

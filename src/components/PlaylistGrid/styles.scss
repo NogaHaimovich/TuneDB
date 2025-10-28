@@ -1,0 +1,36 @@
+.playlist_grid {
+  width: 100%;
+  max-width: 1800px;
+
+  .playlists_list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    width: 100%;
+  }
+
+  .loading_state,
+  .error_state,
+  .empty_state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    min-height: 200px;
+  }
+
+  .error_state {
+    color: #dc3545;
+  }
+
+  .empty_state {
+    color: var(--medium-blue);
+  }
+}
