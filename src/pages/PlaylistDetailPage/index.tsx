@@ -1,40 +1,14 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getAllPlaylistsData, type PlaylistWithTracks } from "../../Services/playlistService";
 import Card from "../../components/Card";
+import usePlaylistDetails from "../../hooks/usePlaylistDetails";
 import "./styles.scss";
 
 const PlaylistDetailPage = () => {
-  const { name } = useParams<{ name: string }>();
-  const [playlist, setPlaylist] = useState<PlaylistWithTracks | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const {
+      playlist,
+      loading,
+      error,
+  } = usePlaylistDetails();
 
-  useEffect(() => {
-    let isMounted = true;
-    (async () => {
-      try {
-        const { playlists } = await getAllPlaylistsData();
-        if (isMounted) {
-          const foundPlaylist = playlists.find(p => 
-            p.name === decodeURIComponent(name || '')
-          );
-          if (foundPlaylist) {
-            setPlaylist(foundPlaylist);
-          } else {
-            setError("Playlist not found");
-          }
-        }
-      } catch (err: any) {
-        if (isMounted) setError(err?.message || "Failed to load playlist");
-      } finally {
-        if (isMounted) setLoading(false);
-      }
-    })();
-    return () => {
-      isMounted = false;
-    };
-  }, [name]);
 
   if (loading) return <div className="playlist_page"><p>Loading playlist...</p></div>;
   if (error) return <div className="playlist_page"><p>{error}</p></div>;
