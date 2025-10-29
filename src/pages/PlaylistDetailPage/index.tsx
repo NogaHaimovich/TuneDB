@@ -4,7 +4,7 @@ import { getAllPlaylistsData, type PlaylistWithTracks } from "../../Services/pla
 import Card from "../../components/Card";
 import "./styles.scss";
 
-const PlaylistPage = () => {
+const PlaylistDetailPage = () => {
   const { name } = useParams<{ name: string }>();
   const [playlist, setPlaylist] = useState<PlaylistWithTracks | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -67,4 +67,4 @@ const PlaylistPage = () => {
   );
 };
 
-export default PlaylistPage; 
+export default PlaylistDetailPage; 

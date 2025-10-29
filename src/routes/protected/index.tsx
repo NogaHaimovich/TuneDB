@@ -1,8 +1,8 @@
 import { Route } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 
-import PlaylistPage from "../../pages/PlaylistPage";
-import MyPlaylistsPage from "../../pages/MyPlayListsPage";
+import PlaylistDetailPage from "../../pages/PlaylistDetailPage";
+import PlaylistsListPage from "../../pages/PlaylistsListPage";
 import LogOut from "../../pages/LogOutPage";
 
 const ProtectedRoutes = () => {
@@ -12,7 +12,7 @@ const ProtectedRoutes = () => {
         path="/playlist/:name" 
         element={
           <ProtectedRoute>
-            <PlaylistPage />
+            <PlaylistDetailPage />
           </ProtectedRoute>
         } 
       />,
@@ -21,7 +21,7 @@ const ProtectedRoutes = () => {
         path="/playlists" 
         element={
           <ProtectedRoute>
-            <MyPlaylistsPage />
+            <PlaylistsListPage />
           </ProtectedRoute>
         } 
       />,

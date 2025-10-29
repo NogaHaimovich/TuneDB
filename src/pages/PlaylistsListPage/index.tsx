@@ -3,7 +3,7 @@ import PlaylistGrid from "../../components/PlaylistGrid";
 import EditPlaylistNamePopup from "../../components/EditPlaylistNamePopup";
 import usePlaylistManager from "../../hooks/usePlaylistManager/index";
 
-const MyPlaylistsPage = () => {
+const PlaylistsListPage = () => {
   const {
     playlists,
     loading,
@@ -46,4 +46,4 @@ const MyPlaylistsPage = () => {
   );
 };
 
-export default MyPlaylistsPage;
+export default PlaylistsListPage;
