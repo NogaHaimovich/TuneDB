@@ -1,5 +1,3 @@
-// Music-related interfaces and types
-
 export interface Song {
   track_id: string;
   songName: string;
@@ -13,7 +11,6 @@ export interface Artist {
 }
 
 
-// API Response types
 export interface TopSongsResponse {
   total: number;
   tracks: Song[];
@@ -29,7 +26,6 @@ export interface TopArtistsResponse {
   tracks: Artist[];
 }
 
-// Simplified types for different pages
 export interface SimplifiedTrack {
   id: number;
   title: string;

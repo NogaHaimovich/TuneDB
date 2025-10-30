@@ -8,28 +8,6 @@
     margin: 0 auto;
     min-height: 100vh;
 
-    .playlist_header {
-        margin-bottom: 3rem;
-        text-align: center;
-
-        .playlist_name {
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--dark-blue);
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--dark-blue), var(--medium-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.02em;
-        }
-
-        .track_count {
-            font-size: 1.2rem;
-            color: var(--medium-blue);
-            font-weight: 500;
-        }
-    }
-
     .tracks_grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));

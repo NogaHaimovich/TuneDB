@@ -1,36 +1,12 @@
-import useData from "../../hooks/useData";
 import "./styles.scss";
 import { Link, useParams } from "react-router-dom";
-import type { SimplifiedAlbum } from "../../types/music";
 import AddToPlaylistButton from "../../components/AddToPlaylistButton";
+import useAlbumData from "../../hooks/useAlbumData";
 
 const AlbumPage = () => {
   const { id: album_id } = useParams<{ id: string }>();
 
-  const { data, loading, error } = useData(
-    album_id ? `/deezer/album?id=${encodeURIComponent(album_id)}` : ""
-  );
-
-  const album: SimplifiedAlbum | null = data
-    ? {
-        id: data.id,
-        title: data.title,
-        cover: data.cover,
-        releaseDate: data.releaseDate,
-        artist: {
-          id: data.artist.id,
-          name: data.artist.name,
-          picture: data.artist.picture,
-        },
-        tracks: data.tracks.map((t: any) => ({
-          id: t.id,
-          title: t.title,
-          duration: t.duration,
-          preview: t.preview,
-          explicit: t.explicit,
-        })),
-      }
-    : null;
+  const { album, loading, error } = useAlbumData(album_id)
 
   if (!album_id) return <p>No album ID provided.</p>;
   if (loading) return <p>Loading album...</p>;

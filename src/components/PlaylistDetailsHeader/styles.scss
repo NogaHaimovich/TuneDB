@@ -1,0 +1,28 @@
+
+.playlist_header {
+    margin-bottom: 3rem;
+    text-align: center;
+
+    .playlist_name {
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--dark-blue);
+        margin-bottom: 1rem;
+        background: linear-gradient(135deg, var(--dark-blue), var(--medium-blue));
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: -0.02em;
+
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .track_count {
+        font-size: 1.2rem;
+        color: var(--medium-blue);
+        font-weight: 500;
+    }
+}

@@ -1,4 +1,5 @@
 import Card from "../../components/Card";
+import PlaylistDetailsHeader from "../../components/PlaylistDetailsHeader";
 import usePlaylistDetails from "../../hooks/usePlaylistDetails";
 import "./styles.scss";
 
@@ -16,10 +17,10 @@ const PlaylistDetailPage = () => {
 
   return (
     <div className="playlist_page">
-      <div className="playlist_header">
-        <h1 className="playlist_name">{playlist.name}</h1>
-        <span className="track_count">{playlist.tracks.length} tracks</span>
-      </div>
+      <PlaylistDetailsHeader
+        name = {playlist.name}
+        tracksCount = {playlist.tracks.length}
+      />
 
       {playlist.tracks.length === 0 ? (
         <p>No tracks in this playlist</p>
