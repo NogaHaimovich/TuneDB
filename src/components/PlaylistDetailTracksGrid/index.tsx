@@ -1,34 +1,11 @@
-
 import Card from "../Card";
 import type { PlaylistDetailTracksGridProp } from "./types";
 import "./styles.scss";
 
 const PlaylistDetailTracksGrid = ({
-    playlist, 
-    loading = false, 
-    error
+    playlist,
 }: PlaylistDetailTracksGridProp) => {
-      if (loading) {
-    return (
-      <div className="playlist_grid">
-        <div className="loading_state">
-          <p>Loading playlists...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="playlist_grid">
-        <div className="error_state">
-          <p>{error}</p>
-        </div>
-      </div>
-    );
-  }
-
-  return(
+  return (
     <div className="playlist_detail_tracks_grid">
       <div className="tracks_grid">
         {playlist.tracks.map((track) => (
@@ -43,7 +20,7 @@ const PlaylistDetailTracksGrid = ({
         ))}
       </div>
     </div>
-  )
+  );
 };
 
 export default PlaylistDetailTracksGrid ;

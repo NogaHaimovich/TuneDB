@@ -2,6 +2,7 @@ import "./styles.scss";
 import { Link, useParams } from "react-router-dom";
 import AddToPlaylistButton from "../../components/AddToPlaylistButton";
 import useAlbumData from "../../hooks/useAlbumData";
+import AlbumHeader from "../../components/AlbumHeader";
 
 const AlbumPage = () => {
   const { id: album_id } = useParams<{ id: string }>();
@@ -15,12 +16,9 @@ const AlbumPage = () => {
 
   return (
     <div className="album_page">
-      <img src={album?.cover} className="album_page_image"></img>
-      <h2 className="album_page_title">{album?.title}</h2>
-      <div className="album_page_detailes">
-        <Link to={`/artist/${album?.artist.id}`}>Artist: {album?.artist.name}</Link>
-        <h3>Release date: {album?.releaseDate}</h3>
-      </div>
+      <AlbumHeader
+        album={album}
+      />
       <div className="album_page_songs_grid">
          <h3>Songs:</h3>
           {album?.tracks && album.tracks.length > 0 && (

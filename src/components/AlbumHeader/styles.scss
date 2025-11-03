@@ -1,0 +1,46 @@
+.album_header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 40px;
+
+  &_image {
+    height: 400px;
+    width: 400px;
+    border-radius: 20px;
+    object-fit: cover;
+    margin-bottom: 24px;
+  }
+
+  &_title {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  &_details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+
+    h3 {
+      font-size: 32px;
+      font-weight: 200;
+      margin: 0;
+    }
+
+    a {
+      font-size: 32px;
+      text-decoration: none;
+      color: var(--medium-blue);
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+

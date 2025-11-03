@@ -1,7 +1,5 @@
-import type {PlaylistWithTracks } from "../../Services/playlistService";
+import type { PlaylistWithTracks } from "../../Services/playlistService";
 
-export interface PlaylistDetailTracksGridProp  {
+export interface PlaylistDetailTracksGridProp {
     playlist: PlaylistWithTracks;
-    loading?: boolean;
-    error?: string; 
 }
