@@ -4,42 +4,4 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  &_songs_grid {
-    width: 100%;
-    max-width: 600px;
-    margin-top: 40px;
-    text-align: left;
-
-    .album_page_song_list {
-        columns: 2;
-        -webkit-columns: 2;
-        -moz-columns: 2;
-
-        list-style-position: inside; 
-        padding: 0;
-        margin: 0;
-        font-size: 28px;
-
-        .album_page_song_item {
-            padding: 8px 0;
-            border-bottom: 1px solid #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            a {
-              font-size: 28px;
-              font-weight: 400;
-              flex: 1;
-            }
-
-            .add_to_playlist_button {
-              height: 40px;
-              width: 40px;
-              margin-left: 16px;
-            }
-      }
-    }
-  }
 }

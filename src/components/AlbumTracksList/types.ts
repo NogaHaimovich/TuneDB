@@ -1,5 +1,5 @@
 import type { SimplifiedAlbum } from "../../types/music";
 
-export interface AlbumHeaderProps {
+export interface AlbumTracksListProps {
     album: SimplifiedAlbum | null;
 }

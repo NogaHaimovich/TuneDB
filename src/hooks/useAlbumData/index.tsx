@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import useData from "../useData";
-import type { UseAlbumDataReturn } from "./types";            // or inline the shape
+import type { UseAlbumDataReturn } from "./types";            
 import type { SimplifiedAlbum } from "../../types/music";
 
 const useAlbumData = (albumId?: string): UseAlbumDataReturn => {
