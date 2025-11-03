@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes } from "react-router-dom";
 
-import NavBar from './components/NavBar';
+import NavBar from './components/layout/NavBar';
 import UserContext from './Contexts/UserContext';
 
 import './App.css';

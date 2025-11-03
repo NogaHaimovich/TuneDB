@@ -1,5 +1,5 @@
-import PlaylistDetailsHeader from "../../components/PlaylistDetailsHeader";
-import PlaylistDetailTracksGrid from "../../components/PlaylistDetailTracksGrid";
+import PlaylistDetailsHeader from "../../components/playlist/PlaylistDetailsHeader";
+import PlaylistDetailTracksGrid from "../../components/playlist/PlaylistDetailTracksGrid";
 import usePlaylistDetails from "../../hooks/usePlaylistDetails";
 import "./styles.scss";
 

@@ -1,7 +1,7 @@
 import "./styles.scss";
-import PlaylistGrid from "../../components/PlaylistGrid";
-import EditPlaylistNamePopup from "../../components/EditPlaylistNamePopup";
-import usePlaylistManager from "../../hooks/usePlaylistManager/index";
+import PlaylistGrid from "../../components/playlist/PlaylistGrid";
+import EditPlaylistNamePopup from "../../components/playlist/EditPlaylistNamePopup";
+import usePlaylistManager from "../../hooks/usePlaylistManager";
 
 const PlaylistsListPage = () => {
   const {

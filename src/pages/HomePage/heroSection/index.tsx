@@ -1,8 +1,8 @@
 import "./styles.scss";
-import Threads from "../../../components/ThreadAnimation/Threads";
 import React from "react";
 import { isHeroSectionVisible } from "../../../hooks/useScrollPosition";
-import SearchBar from "../../../components/SearchBar";
+import SearchBar from "../../../components/layout/SearchBar";
+import Threads from "../../../components/animations/ThreadAnimation/Threads";
 
 const HeroSection: React.FC = () => {
   const { isHeroVisible } = isHeroSectionVisible();

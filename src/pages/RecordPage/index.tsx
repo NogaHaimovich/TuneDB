@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import "./styles.scss";
 import type { SimplifiedRecord } from "../../types/music";
 import useData from "../../hooks/useData";
-import AddToPlaylistButton from "../../components/AddToPlaylistButton";
+import AddToPlaylistButton from "../../components/playlist/AddToPlaylistButton";
 
 const RecordPage = () => {
     const { id: record_id } = useParams<{ id: string }>();

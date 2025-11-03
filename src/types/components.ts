@@ -1,4 +1,3 @@
-// Component-related interfaces and types
 
 export type CardType = "artist" | "record" | "album";
 

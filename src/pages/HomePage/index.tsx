@@ -1,9 +1,9 @@
 import HeroSection from "./heroSection";
-import CardSection from "../../components/CardsSection";
+import CardSection from "../../components/common/CardsSection";
 import useData from "../../hooks/useData";
 import "./styles.scss";
 import type { Song, Artist, TopSongsResponse, TopArtistsResponse, NewSongsResponse } from "../../types/music";
-import type { CardProps } from "../../components/Card";
+import type { CardProps } from "../../types/components";
 
 
 

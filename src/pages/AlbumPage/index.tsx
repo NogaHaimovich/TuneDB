@@ -1,8 +1,8 @@
 import "./styles.scss";
 import { useParams } from "react-router-dom";
 import useAlbumData from "../../hooks/useAlbumData";
-import AlbumHeader from "../../components/AlbumHeader";
-import AlbumTracksList from "../../components/AlbumTracksList";
+import AlbumHeader from "../../components/album/AlbumHeader";
+import AlbumTracksList from "../../components/album/AlbumTracksList";
 
 const AlbumPage = () => {
   const { id: album_id } = useParams<{ id: string }>();

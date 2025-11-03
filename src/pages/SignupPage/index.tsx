@@ -2,14 +2,14 @@ import { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Button from "../../components/Button";
-import Disc from "../../components/Disc";
-import InputField from "../../components/InputField";
+import Button from "../../components/common/Button";
+import Disc from "../../components/common/Disc";
 import UserContext from "../../Contexts/UserContext";
 
 import "./styles.scss";
 import { signup, getUser } from "../../Services/userService";
 import type { SignUpForm } from "../../types";
+import InputField from "../../components/common/InputField";
 
 
 const schema = z.object({

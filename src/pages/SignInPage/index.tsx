@@ -4,14 +4,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import Button from "../../components/Button";
-import Disc from "../../components/Disc";
-import InputField from "../../components/InputField";
+import Button from "../../components/common/Button";
+import Disc from "../../components/common/Disc";
 import UserContext from "../../Contexts/UserContext";
 
 import "./styles.scss";
 import { getUser, signin } from "../../Services/userService";
 import type { SignInForm } from "../../types";
+import InputField from "../../components/common/InputField";
 
 const schema = z.object({
   email: z.string().email({ message: "Please enter valid email address." }).min(3),

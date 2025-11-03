@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import "./styles.scss";
 import useData from "../../hooks/useData";
-import Card from "../../components/Card";
+import Card from "../../components/common/Card";
 import type { SimplifiedArtist } from "../../types/music";
 
 const ArtistPage = () => {
