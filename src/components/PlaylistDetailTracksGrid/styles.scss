@@ -1,0 +1,27 @@
+.playlist_detail_tracks_grid {
+    .tracks_grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 8rem;
+        width: 100%;
+        max-width: 1600px;
+
+        .track_item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.2s ease;
+
+            &:hover {
+                transform: scale(1.05);
+            }
+
+            .card {
+                .card__title {
+                    font-size: 20px !important;
+                }
+            }
+        }
+    }
+}

@@ -1,5 +1,5 @@
-import Card from "../../components/Card";
 import PlaylistDetailsHeader from "../../components/PlaylistDetailsHeader";
+import PlaylistDetailTracksGrid from "../../components/PlaylistDetailTracksGrid";
 import usePlaylistDetails from "../../hooks/usePlaylistDetails";
 import "./styles.scss";
 
@@ -25,18 +25,9 @@ const PlaylistDetailPage = () => {
       {playlist.tracks.length === 0 ? (
         <p>No tracks in this playlist</p>
       ) : (
-        <div className="tracks_grid">
-          {playlist.tracks.map((track) => (
-            <div key={track.trackId} className="track_item">
-              <Card
-                title={track.title}
-                image={track.image}
-                id={track.trackId}
-                type="record"
-              />
-            </div>
-          ))}
-        </div>
+        <PlaylistDetailTracksGrid
+          playlist={playlist}
+        />
       )}
     </div>
   );
