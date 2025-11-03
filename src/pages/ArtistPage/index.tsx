@@ -3,6 +3,7 @@ import "./styles.scss";
 import useData from "../../hooks/useData";
 import Card from "../../components/common/Card";
 import type { SimplifiedArtist } from "../../types/music";
+import ArtistHeader from "../../components/artist/ArtistHeader";
 
 const ArtistPage = () => {
   const { id: artist_id } = useParams<{ id: string }>();
@@ -20,12 +21,9 @@ const ArtistPage = () => {
 
   return (
     <div className="artist_page">
-        <img
-            className="artist_page_image"
-            src={artist?.image}
-            alt={artist?.name}
+        <ArtistHeader
+          artist={artist}
         />
-        <h2 className="artist_page_title">{artist?.name}</h2>
         
         <h3>-Songs-</h3>
         {artist?.songs && artist.songs.length > 0 && (
