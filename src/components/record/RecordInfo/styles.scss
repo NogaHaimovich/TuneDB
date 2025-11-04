@@ -1,0 +1,29 @@
+.record_info {
+    margin-bottom: 200px;
+    .record_page_info {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        min-width: 300px;
+    }
+
+    .record_page_data {
+        font-size: 24px;
+        margin: 0;
+        color: var(--dark-blue);
+        line-height: 1.6;
+
+        a {
+            font-size: 28px;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--medium-blue);
+            transition: color 0.2s ease;
+
+            &:hover {
+                color: var(--light-medium-blue);
+                text-decoration: underline;
+            }
+        }
+    }
+}

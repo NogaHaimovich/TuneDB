@@ -1,59 +1,48 @@
-.record_page{
+.record_page {
     padding-top: 200px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    min-height: 100vh;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
 
-    &_album_cover{
-        height: 400px;
-        width: 400px;
-        border-radius: 20px;
-    }
-
-    &_title{
-        font-size: 48px;
-        font-weight: bold;
-        margin-bottom: 40px;
-    }
-
-    &_main{
+    &_main {
         display: flex;
-        gap: 100px;
+        gap: 80px;
         align-items: flex-start;
         padding-top: 40px;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
     }
 
-    &_artist-data{
-        &_image{
+    &_artist-data {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+
+        .artist_image {
             height: 250px;
             width: 250px;
             border-radius: 50%;
             object-fit: cover;
-        }
-    }
-
-    &_info{
-        display: flex;
-        flex-direction: column;
-        gap: 30px; 
-    }
-
-    &_data{
-        font-size: 28px;
-        margin: 0;
-
-        a {
-            font-size: 32px;
-            text-decoration: none;
-            color: var(--medium-blue);
+            transition: transform 0.3s ease;
 
             &:hover {
-                text-decoration: underline;
+                transform: scale(1.05);
             }
         }
     }
-
-
 }
 

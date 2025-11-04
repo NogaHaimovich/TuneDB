@@ -1,0 +1,40 @@
+.record_header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 40px;
+
+    .record_page_album_cover {
+        height: 400px;
+        width: 400px;
+        border-radius: 20px;
+        object-fit: cover;
+        margin-bottom: 24px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease;
+
+        &:hover {
+            transform: scale(1.02);
+        }
+    }
+
+    .record_page_title {
+        font-size: 48px;
+        font-weight: bold;
+        margin-bottom: 24px;
+        color: var(--dark-blue);
+        background: linear-gradient(135deg, var(--dark-blue), var(--medium-blue));
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    audio {
+        margin-top: 20px;
+        width: 100%;
+        max-width: 500px;
+        border-radius: 25px;
+        outline: none;
+    }
+}
