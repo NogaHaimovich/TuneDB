@@ -10,8 +10,8 @@ const ArtistHeader = ({
         <>
             <img
                 className="artist_page_image"
-                src={artist?.image}
-                alt={artist?.name} />
+                src={artist?.picture || artist?.image || ""}
+                alt={artist?.name || "Artist"} />
             <h2 className="artist_page_title">{artist?.name}</h2>
         </>
         

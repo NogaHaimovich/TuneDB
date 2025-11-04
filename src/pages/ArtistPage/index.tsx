@@ -1,23 +1,19 @@
 import { useParams } from "react-router-dom";
 import "./styles.scss";
-import useData from "../../hooks/useData";
 import Card from "../../components/common/Card";
-import type { SimplifiedArtist } from "../../types/music";
 import ArtistHeader from "../../components/artist/ArtistHeader";
+import useArtistData from "../../hooks/useArtistData";
 
 const ArtistPage = () => {
   const { id: artist_id } = useParams<{ id: string }>();
 
-  const { data, loading, error } = useData<SimplifiedArtist>(
-    artist_id ? `/deezer/artist?id=${encodeURIComponent(artist_id)}` : ""
-  );
+  const { artist, loading, error } = useArtistData(artist_id)
 
   if (!artist_id) return <p>No artist ID provided.</p>;
   if (loading) return <p>Loading artist...</p>;
   if (error) return <p>Error loading artist: {error}</p>;
-  if (!loading && !data) return <p>No data found for this artist.</p>;
+  if (!loading && !artist) return <p>No data found for this artist.</p>;
 
-  const artist = data;
 
   return (
     <div className="artist_page">
