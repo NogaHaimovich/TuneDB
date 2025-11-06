@@ -26,8 +26,15 @@
     overflow-wrap: break-word; 
     word-break: break-word;
     white-space: normal;
-    line-height: 1.2;
+    line-height: 1;
     box-sizing: border-box; 
+  }
+  
+  &__subTitle {
+    font-size: 18px;
+    font-weight: 500;
+    overflow-wrap: break-word; 
+    word-break: break-word;
   }
 }
 

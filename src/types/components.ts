@@ -3,6 +3,7 @@ export type CardType = "artist" | "record" | "album";
 
 export interface CardProps {
   title?: string;
+  subTitle?: string,
   image?: string;
   id?: string;
   type: CardType;
