@@ -7,7 +7,7 @@ import type { UseRecordDataReturn } from "./types";
 
 const useRecordData = (recordId?: string): UseRecordDataReturn => {
     const endpoint = recordId ? `/deezer/record?id=${encodeURIComponent(recordId)}` : "";
-    const { data, loading, error } = useData<any>(endpoint);
+    const { data, loading, error, refetch } = useData<any>(endpoint);
 
     const record: SimplifiedRecord | null = useMemo(() =>{
         if (!data) return null;
@@ -28,7 +28,7 @@ const useRecordData = (recordId?: string): UseRecordDataReturn => {
         };
     }, [data]);
 
-    return {record, loading, error};
+    return {record, loading, error, refetch};
 
 }
 

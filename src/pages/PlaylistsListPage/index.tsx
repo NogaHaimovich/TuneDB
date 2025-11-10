@@ -1,7 +1,11 @@
+import { useMemo } from "react";
 import "./styles.scss";
 import PlaylistGrid from "../../components/playlist/PlaylistGrid";
 import EditPlaylistNamePopup from "../../components/playlist/EditPlaylistNamePopup";
 import usePlaylistManager from "../../hooks/usePlaylistManager";
+import LoadingState from "../../components/common/LoadingState";
+import ErrorState from "../../components/common/ErrorState";
+import SkeletonCard from "../../components/common/Card/SkeletonCard";
 
 const PlaylistsListPage = () => {
   const {
@@ -17,7 +21,40 @@ const PlaylistsListPage = () => {
     handleNameChange,
     handleCloseEditPopup,
     handleSaveEdit,
+    refreshPlaylists,
   } = usePlaylistManager();
+
+  const skeletons = useMemo(
+    () =>
+      Array.from({ length: 8 }, (_, index) => <SkeletonCard key={`playlist-grid-skeleton-${index}`} />),
+    []
+  );
+
+  if (loading) {
+    return (
+      <div className="playlists_page playlists_page--state">
+        <LoadingState
+          title="Loading playlists"
+          description="Hang tight while we load your playlists."
+          skeletons={skeletons}
+          fullHeight
+        />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="playlists_page playlists_page--state">
+        <ErrorState
+          title="We couldn't load your playlists."
+          description={error}
+          onRetry={refreshPlaylists}
+          retryLabel="Try again"
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="playlists_page">
@@ -25,8 +62,6 @@ const PlaylistsListPage = () => {
 
       <PlaylistGrid
         playlists={playlists}
-        loading={loading}
-        error={error || undefined}
         onEdit={handleEdit}
         onDelete={handleDelete}
         onViewMore={handleViewMore}

@@ -4,34 +4,12 @@ import PlaylistCard from "../PlaylistCard";
 
 const PlaylistGrid = ({
   playlists,
-  loading = false,
-  error,
   onEdit,
   onDelete,
   onViewMore,
   emptyMessage = "No playlists yet.",
-  showActions = true
+  showActions = true,
 }: PlaylistGridProps) => {
-  if (loading) {
-    return (
-      <div className="playlist_grid">
-        <div className="loading_state">
-          <p>Loading playlists...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="playlist_grid">
-        <div className="error_state">
-          <p>{error}</p>
-        </div>
-      </div>
-    );
-  }
-
   if (playlists.length === 0) {
     return (
       <div className="playlist_grid">

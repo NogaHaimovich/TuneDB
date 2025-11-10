@@ -5,7 +5,7 @@ import type { SimplifiedTrack } from "../../types/music";
 
 const useSearchResults = (query?: string): UseSearchResultsReturn => {
     const endpoint = query ? `/deezer/search?q=${encodeURIComponent(query)}` : "";
-    const { data, loading, error } = useData<any>(endpoint);
+    const { data, loading, error, refetch } = useData<any>(endpoint);
 
     const tracks: SimplifiedTrack[] = useMemo(() => {
         if (!data?.data) return [];
@@ -17,7 +17,7 @@ const useSearchResults = (query?: string): UseSearchResultsReturn => {
         }));
     }, [data]);
 
-    return { tracks, loading, error };
+    return { tracks, loading, error, refetch };
 };
 
 export default useSearchResults;

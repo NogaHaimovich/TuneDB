@@ -28,5 +28,82 @@
     gap: 16px; 
     margin-top: 24px;
     }
+
+    &--state {
+        min-height: 60vh;
+        width: 100%;
+    }
+
+    &__skeleton {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        width: 100%;
+        max-width: 1200px;
+        align-items: center;
+    }
+
+    &__skeleton-header {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+        flex-wrap: wrap;
+        width: 100%;
+        justify-content: center;
+    }
+
+    &__skeleton-image {
+        width: 240px;
+        height: 240px;
+        border-radius: 50%;
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: artist-page-shimmer 1.5s infinite;
+        flex-shrink: 0;
+    }
+
+    &__skeleton-details {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        min-width: 240px;
+        max-width: 400px;
+        width: 100%;
+    }
+
+    &__skeleton-line {
+        width: 100%;
+        height: 16px;
+        border-radius: 12px;
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: artist-page-shimmer 1.5s infinite;
+
+        &--title {
+            height: 32px;
+            border-radius: 16px;
+        }
+
+        &--short {
+            width: 60%;
+        }
+    }
+
+    &__skeleton-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 16px; 
+        margin-top: 24px;
+        width: 100%;
+    }
 }
 
+@keyframes artist-page-shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+
+}

@@ -1,0 +1,48 @@
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2.5rem 2rem;
+  width: 100%;
+  text-align: center;
+  border-radius: 18px;
+  background: rgba(238, 241, 247, 0.9);
+  color: var(--medium-blue);
+
+  &__icon {
+    font-size: 2.75rem;
+    line-height: 1;
+    color: var(--light-medium-blue);
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 28rem;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--medium-blue);
+  }
+
+  &__description {
+    margin: 0;
+    color: rgba(36, 32, 79, 0.8);
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+

@@ -21,6 +21,17 @@
         letter-spacing: -0.02em;
     }
 
+    &--state {
+        min-height: 60vh;
+        width: 100%;
+    }
+
+    .loading-state__skeletons {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 1.5rem;
+        width: 100%;
+    }
 }
 
 

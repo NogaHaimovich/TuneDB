@@ -7,7 +7,7 @@ import type { SimplifiedArtist } from "../../types/music";
 
 const useArtistData = (artistId?: string): UseArtistDataReturn => {
     const endpoint = artistId ? `/deezer/artist?id=${encodeURIComponent(artistId)}` : "";
-    const { data, loading, error } = useData<any>(endpoint);
+    const { data, loading, error, refetch } = useData<any>(endpoint);
 
     const artist: SimplifiedArtist | null = useMemo(() =>{
         if (!data) return null;
@@ -28,7 +28,7 @@ const useArtistData = (artistId?: string): UseArtistDataReturn => {
         };
     }, [data]);
 
-    return {artist, loading, error};
+    return {artist, loading, error, refetch};
 
 }
 

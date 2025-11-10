@@ -5,7 +5,7 @@ import type { SimplifiedAlbum } from "../../types/music";
 
 const useAlbumData = (albumId?: string): UseAlbumDataReturn => {
   const endpoint = albumId ? `/deezer/album?id=${encodeURIComponent(albumId)}` : "";
-  const { data, loading, error } = useData<any>(endpoint);
+  const { data, loading, error, refetch } = useData<any>(endpoint);
 
   const album: SimplifiedAlbum | null = useMemo(() => {
     if (!data) return null;
@@ -30,7 +30,7 @@ const useAlbumData = (albumId?: string): UseAlbumDataReturn => {
     };
   }, [data]);
 
-  return { album, loading, error };
+  return { album, loading, error, refetch };
 };
 
 export default useAlbumData;

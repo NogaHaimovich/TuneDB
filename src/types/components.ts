@@ -1,4 +1,6 @@
 
+import type React from "react";
+
 export type CardType = "artist" | "record" | "album";
 
 export interface CardProps {
@@ -30,4 +32,24 @@ export interface ThreadsProps {
   amplitude?: number;
   distance?: number;
   enableMouseInteraction?: boolean;
+}
+
+export interface LoadingStateProps {
+  title?: string;
+  description?: string;
+  skeletons?: React.ReactNode;
+  className?: string;
+  fullHeight?: boolean;
+  children?: React.ReactNode;
+}
+
+export interface ErrorStateProps {
+  title?: string;
+  description?: string;
+  onRetry?: () => void | Promise<void>;
+  retryLabel?: string;
+  actions?: React.ReactNode;
+  icon?: React.ReactNode;
+  className?: string;
+  children?: React.ReactNode;
 }
