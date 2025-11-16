@@ -1,9 +1,11 @@
 import { Router } from "express";
 import deezerService from "../services/dezzer.service.js";
+import type { Request, Response } from "express";
+
 
 export const router = Router();
 
-router.get("/topRatedSongs", async (req, res) => {
+router.get("/topRatedSongs", async (req: Request, res: Response) => {
   const limit = parseInt(req.query.limit as string) || 5;
 
   try {
@@ -26,7 +28,7 @@ router.get("/topRatedSongs", async (req, res) => {
 });
 
 
-router.get("/topRatedArtists", async (req, res) => {
+router.get("/topRatedArtists", async (req: Request, res: Response) => {
   const limit = parseInt(req.query.limit as string) || 5;
 
   try {
@@ -68,23 +70,38 @@ router.get("/newSongs", async (req, res) => {
 });
 
 
-router.get("/search", async (req, res) => {
+router.get("/search", async (req: Request, res: Response) => {
   try {
     const query = req.query.q as string;
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 25; 
     if (!query) {
       return res.status(400).json({ error: "Missing search query" });
     }
 
-    const data = await deezerService.getSearchResults(query);
-    res.json(data); 
+    const data = await deezerService.getSearchResults(query, page, limit);
+
+    const total = data.total || 0;
+    const hasMore = Boolean(data.next);
+    const nextPage = hasMore ? page + 1 : null;
+
+    res.json({
+      data: data.data, 
+      meta: {
+        total,
+        page,
+        limit,
+        hasMore,
+        nextPage,
+      },
+    });
   } catch (error) {
     console.error("Search route error:", error);
     res.status(500).json({ error: "Failed to search" });
   }
 });
 
-
-router.get("/suggest", async (req, res) => {
+router.get("/suggest", async (req: Request, res: Response) => {
   try {
     const query = req.query.q as string;
     if (!query) {
@@ -99,7 +116,7 @@ router.get("/suggest", async (req, res) => {
   }
 });
 
-router.get("/record", async (req, res) => {
+router.get("/record", async (req: Request, res: Response) => {
   try {
     const record_id = req.query.id as string;
     if (!record_id) {
@@ -140,7 +157,7 @@ router.get("/record", async (req, res) => {
   }
 });
 
-router.get("/artist", async (req, res) => {
+router.get("/artist", async (req: Request, res: Response) => {
   try {
     const artist_id = req.query.id as string;
     if (!artist_id) {
@@ -171,7 +188,7 @@ router.get("/artist", async (req, res) => {
   }
 });
 
-router.get("/album", async (req, res) => {
+router.get("/album", async (req: Request, res: Response) => {
   try{
     const album_id = req.query.id as string;
     if(!album_id){

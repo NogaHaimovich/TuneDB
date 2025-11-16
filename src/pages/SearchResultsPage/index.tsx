@@ -5,12 +5,25 @@ import Card from "../../components/common/Card";
 import LoadingState from "../../components/common/LoadingState";
 import ErrorState from "../../components/common/ErrorState";
 import SkeletonCard from "../../components/common/Card/SkeletonCard";
+import Button from "../../components/common/Button";
 import useSearchResults from "../../hooks/useSearchResults";
 
 const SearchResultsPage = () => {
   const { query } = useParams<{ query: string }>();
 
-  const { tracks, loading, error, refetch } = useSearchResults(query);
+  const {
+    tracks,
+    loading,
+    loadingMore,
+    error,
+    refetch,
+    hasMore,
+    loadMore,
+    total,
+  } = useSearchResults(query);
+
+  const hasResults = tracks.length > 0;
+  const totalResults = total ?? tracks.length;
 
   const skeletons = useMemo(
     () => (
@@ -40,7 +53,7 @@ const SearchResultsPage = () => {
     );
   }
 
-  if (error) {
+  if (error && !hasResults) {
     return (
       <div className="results_page_container">
         <ErrorState
@@ -53,7 +66,7 @@ const SearchResultsPage = () => {
     );
   }
 
-  if (tracks.length === 0) {
+  if (!loading && !hasResults) {
     return (
       <div className="results_page_container">
         <ErrorState
@@ -67,6 +80,10 @@ const SearchResultsPage = () => {
   return (
     <div className="results_page_container">
       <h2 className="results_page_title">Search results for: {query}</h2>
+      <p className="results_page_summary">
+        Showing {tracks.length} {tracks.length === 1 ? "result" : "results"}
+        {totalResults > tracks.length ? ` of ${totalResults}` : ""}.
+      </p>
       <div className="results_grid">
         {tracks.map((track) => (
           <Card
@@ -79,6 +96,25 @@ const SearchResultsPage = () => {
           />
         ))}
       </div>
+
+      {error && hasResults && (
+        <div className="results_page_message results_page_message--error">
+          <p>Something went wrong while loading additional results.</p>
+        </div>
+      )}
+
+      {hasMore && (
+        <div className="results_page_pagination">
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={loadMore}
+            disabled={loadingMore}
+          >
+            {loadingMore ? "Loading..." : "Load more tracks"}
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

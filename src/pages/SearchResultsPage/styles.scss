@@ -9,9 +9,36 @@
     font-size: 48px;
 }
 
+.results_page_summary {
+  margin-top: 12px;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
 .results_grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr); 
   gap: 100px; 
   margin-top: 20px;
+}
+
+.results_page_pagination {
+  margin-top: 48px;
+  display: flex;
+  justify-content: center;
+
+  .ui-btn {
+    min-width: 220px;
+  }
+}
+
+.results_page_message {
+  margin-top: 32px;
+  font-size: 16px;
+  text-align: center;
+  max-width: 600px;
+
+  &--error {
+    color: #ff6b6b;
+  }
 }

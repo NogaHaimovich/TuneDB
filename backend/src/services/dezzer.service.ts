@@ -43,10 +43,15 @@ const getNewSongs = async (limit: number = 5): Promise<any> => {
   }
 };
 
-const getSearchResults = async (query: string): Promise<any> => {
+const getSearchResults = async (query: string, page: number = 1, limit: number = 24): Promise<any> => {
   try {
+    const index = (page - 1) * limit
     const response = await axios.get(`${DEEZER_API_BASE}/search`, {
-      params: { q: query }, 
+      params: { 
+        q: query, 
+        index,
+        limit
+     }, 
     });
     return response.data;
   } catch (error) {
