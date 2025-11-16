@@ -2,12 +2,13 @@ import { useMemo } from "react";
 import useData from "../useData";
 import type { SimplifiedRecord } from "../../types/music";
 import type { UseRecordDataReturn } from "./types";
+import type { RecordResponse } from "../../types/api";
 
 
 
 const useRecordData = (recordId?: string): UseRecordDataReturn => {
     const endpoint = recordId ? `/deezer/record?id=${encodeURIComponent(recordId)}` : "";
-    const { data, loading, error, refetch } = useData<any>(endpoint);
+    const { data, loading, error, refetch } = useData<RecordResponse>(endpoint);
 
     const record: SimplifiedRecord | null = useMemo(() =>{
         if (!data) return null;

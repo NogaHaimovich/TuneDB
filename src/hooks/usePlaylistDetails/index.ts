@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getAllPlaylistsData, type PlaylistWithTracks } from "../../Services/playlistService";
 import type { UsePlaylistDetailReturn } from "./types";
+import { getErrorMessage } from "../../utils/get_error_message";
 
 
 const usePlaylistDetails = (): UsePlaylistDetailReturn => {
@@ -25,8 +26,9 @@ const usePlaylistDetails = (): UsePlaylistDetailReturn => {
                 setError("Playlist not found");
             }
             }
-        } catch (err: any) {
-            if (isMounted) setError(err?.message || "Failed to load playlist");
+        } catch (err: unknown) {
+            const error_message = getErrorMessage(err)
+            if (isMounted) setError(error_message || "Failed to load playlist");
         } finally {
             if (isMounted) setLoading(false);
         }
@@ -49,8 +51,9 @@ const usePlaylistDetails = (): UsePlaylistDetailReturn => {
             } else {
                 setError("Playlist not found");
             }
-        } catch (err: any) {
-            setError(err?.message || "Failed to load playlist");
+        } catch (err: unknown) {
+            const error_message = getErrorMessage(err)
+            setError(error_message|| "Failed to load playlist");
         } finally {
             setLoading(false);
         }

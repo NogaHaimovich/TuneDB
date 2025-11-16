@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./styles.scss";
 import { getUserPlaylists } from "../../../Services/playlistService";
 import { createPlaylist } from "../../../Services/playlistService";
+import { getErrorMessage } from "../../../utils/get_error_message";
 
 interface PlaylistSelectorProps {
   isOpen: boolean;
@@ -59,8 +60,9 @@ const PlaylistSelector: React.FC<PlaylistSelectorProps> = ({
       await fetchPlaylists(); 
       setNewPlaylistName("");
       setShowCreateForm(false);
-    } catch (err: any) {
-      setError(err.response?.data?.error || "Failed to create playlist");
+    } catch (err: unknown) {
+      const error_message = getErrorMessage(err)
+      setError(error_message || "Failed to create playlist");
     } finally {
       setCreating(false);
     }

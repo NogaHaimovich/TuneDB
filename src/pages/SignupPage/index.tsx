@@ -33,7 +33,7 @@ const SignUpPage = () => {
         register,
         handleSubmit,
         formState: {errors},
-    } = useForm({ resolver: zodResolver(schema) });
+    } = useForm<SignUpForm>({ resolver: zodResolver(schema) });
     const [formError, setFormError] = useState("")
 
 
@@ -44,10 +44,15 @@ const SignUpPage = () => {
             setUser(user);
             window.location.href = "/";
             
-        } catch (err: any) {
-            if(err.response && err.response.status === 400){
-                setFormError(err.response.data.message)
+        } catch (err: unknown) {
+            if (typeof err === "object" && err !== null && "response" in err) {
+                const resp = (err as { response?: { status?: number; data?: { message?: string } } }).response;
+                if (resp?.status === 400 && resp.data?.message) {
+                    setFormError(resp.data.message);
+                    return;
+                }
             }
+            setFormError("Something went wrong. Please try again later.");
         }
     };
 

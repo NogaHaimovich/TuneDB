@@ -21,7 +21,7 @@ const schema = z.object({
 const SignIn = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const from = (location.state as any)?.from || "/";
+  const from = (location.state as { from?: string } | null)?.from || "/";
   const { setUser } = useContext(UserContext);
 
   const { register, handleSubmit, formState: { errors } } = useForm<SignInForm>({
@@ -42,12 +42,15 @@ const SignIn = () => {
       const user = getUser();
       setUser(user);
       navigate(from);
-    } catch (err: any) {
-      if (err.response && err.response.status === 400) {
-        setFormError(err.response.data.message);
-      } else {
-        setFormError("Something went wrong. Please try again later.");
+    } catch (err: unknown) {
+      if (typeof err === "object" && err !== null && "response" in err) {
+        const resp = (err as { response?: { status?: number; data?: { message?: string } } }).response;
+        if (resp?.status === 400 && resp.data?.message) {
+          setFormError(resp.data.message);
+          return;
+        }
       }
+      setFormError("Something went wrong. Please try again later.");
     }
   };
 

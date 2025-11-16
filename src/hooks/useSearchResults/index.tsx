@@ -2,11 +2,12 @@ import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import useData from "../useData";
 import type { UseSearchResultsReturn } from "./types";
 import type { SimplifiedTrack } from "../../types/music";
+import type { SearchResponse, SearchItem } from "../../types/api";
 
 const DEFAULT_LIMIT = 24;
 
-const mapTracks = (rawTracks: any[]): SimplifiedTrack[] =>
-  rawTracks.map((track: any) => ({
+const mapTracks = (rawTracks: SearchItem[]): SimplifiedTrack[] =>
+  rawTracks.map((track: SearchItem) => ({
     id: track.id,
     title: track.title_short,
     artist: track.artist?.name ?? "Unknown Artist",
@@ -38,7 +39,7 @@ const useSearchResults = (
     return `/deezer/search?${params.toString()}`;
   }, [query, page, limit, refreshKey]);
 
-  const { data, loading, error } = useData<any>(endpoint);
+  const { data, loading, error } = useData<SearchResponse>(endpoint);
 
   useEffect(() => {
     const prevQuery = prevQueryRef.current;

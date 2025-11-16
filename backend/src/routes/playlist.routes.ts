@@ -1,8 +1,10 @@
 import { Router } from "express";
 import { authMiddleware } from "../middleware/auth.js";
 import { getUserPlaylists, addTrackToPlaylist, createPlaylist, getPlaylistSongs, removePlaylist, renamePlaylist} from "../services/playlist.service.js";
+import { getErrorMessage } from "../utils.js";
 
 const router = Router();
+
 
 router.get("/", authMiddleware, async (req, res) => {
   try {
@@ -42,9 +44,9 @@ router.post("/:trackId", authMiddleware, async (req, res) => {
     });
 
     return res.status(200).json(updatedPlaylist);
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Playlist route error:", err);
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: getErrorMessage(err) });
   }
 });
 
@@ -64,9 +66,9 @@ router.post("/create", authMiddleware, async (req, res) => {
     const newPlaylist = await createPlaylist(userId, playlistName);
 
     return res.status(201).json(newPlaylist);
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Create playlist error:", err);
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({error: getErrorMessage(err) });
   }
 });
 
@@ -106,9 +108,9 @@ router.delete("/removePlaylist", authMiddleware, async (req, res) => {
     const result = await removePlaylist(userId, playlistName);
 
     return res.status(200).json(result);
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Delete playlist error:", err);
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: getErrorMessage(err) });
   }
 });
 
@@ -128,9 +130,9 @@ router.put("/renamePlaylist", authMiddleware, async (req, res) => {
     const result = await renamePlaylist(userId, oldName, newName)
     return res.status(200).json(result)
    
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Rename playlist error:", err);
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: getErrorMessage(err) });
   }
 });
 

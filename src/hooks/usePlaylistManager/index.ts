@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import type { UsePlaylistManagerReturn } from "./types";
 import { getAllPlaylistsData, removePlaylistClicked, renamePlaylist, type PlaylistWithTracks } from "../../Services/playlistService";
+import { getErrorMessage } from "../../utils/get_error_message";
 
 const usePlaylistManager = (): UsePlaylistManagerReturn => {
   const [playlists, setPlaylists] = useState<PlaylistWithTracks[]>([]);
@@ -20,8 +21,9 @@ const usePlaylistManager = (): UsePlaylistManagerReturn => {
     try {
       const { playlists } = await getAllPlaylistsData();
       setPlaylists(playlists);
-    } catch (err: any) {
-      setError(err?.message || "Failed to load playlists");
+    } catch (err: unknown) {
+      const error_message = getErrorMessage(err)
+      setError(error_message|| "Failed to load playlists");
     } finally {
       setLoading(false);
     }
@@ -61,9 +63,10 @@ const usePlaylistManager = (): UsePlaylistManagerReturn => {
       await removePlaylistClicked(playlistName);
       toast.success('Playlist removed successfully');
       await refreshPlaylists();
-    } catch (error: any) {
+    } catch (err: unknown) {
+      const error_message = getErrorMessage(err)
       toast.error('Error removing the playlist');
-      console.error(`Error removing ${playlistName}: `, error);
+      console.error(`Error removing ${playlistName}: `, error_message);
     }
   }, [refreshPlaylists]);
 
@@ -95,8 +98,9 @@ const usePlaylistManager = (): UsePlaylistManagerReturn => {
       await refreshPlaylists();
       handleCloseEditPopup();
       toast.success('Playlist renamed successfully');
-    } catch (error: any) {
-      setPopupError(error?.response?.data?.error || "Error renaming playlist");
+    } catch (err: unknown) {
+      const error_message = getErrorMessage(err)
+      setPopupError(error_message || "Error renaming playlist");
       console.error("Rename playlist error:", error);
     }
   }, [editingPlaylist, newPlaylistName, refreshPlaylists, handleCloseEditPopup]);

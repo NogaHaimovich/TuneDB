@@ -2,10 +2,11 @@ import { useMemo } from "react";
 import useData from "../useData";
 import type { UseAlbumDataReturn } from "./types";            
 import type { SimplifiedAlbum } from "../../types/music";
+import type { AlbumResponse } from "../../types/api";
 
 const useAlbumData = (albumId?: string): UseAlbumDataReturn => {
   const endpoint = albumId ? `/deezer/album?id=${encodeURIComponent(albumId)}` : "";
-  const { data, loading, error, refetch } = useData<any>(endpoint);
+  const { data, loading, error, refetch } = useData<AlbumResponse>(endpoint);
 
   const album: SimplifiedAlbum | null = useMemo(() => {
     if (!data) return null;
@@ -20,7 +21,7 @@ const useAlbumData = (albumId?: string): UseAlbumDataReturn => {
         picture: data.artist?.picture ?? data.artist?.image,
         image: data.artist?.image,          
       },
-      tracks: (data.tracks ?? []).map((t: any) => ({
+      tracks: (data.tracks ?? []).map((t) => ({
         id: t.id,                           
         title: t.title,
         duration: t.duration,

@@ -12,9 +12,9 @@ router.get("/topRatedSongs", async (req: Request, res: Response) => {
     const data = await deezerService.getTopRatedSongs(limit);
 
 
-    const simplifiedData = data.data.map((track: any) => ({
+    const simplifiedData = data.data.map((track: { id: number; title: string; artist?: { picture_big?: string } }) => ({
       songName: track.title,
-      image: track.artist["picture_big"],
+      image: track.artist?.picture_big,
       track_id: track.id
     }));
     
@@ -33,7 +33,8 @@ router.get("/topRatedArtists", async (req: Request, res: Response) => {
 
   try {
     const data = await deezerService.getTopRatedArtists(limit);    
-    const simplifiedData = data.data.map((artist: any) => ({
+    const artists = data.data ?? [];
+    const simplifiedData = artists.map((artist: { id: number; name: string; picture_big?: string }) => ({
       artistName: artist.name,
       image: artist.picture_big,
       artist_id: artist.id
@@ -54,7 +55,7 @@ router.get("/newSongs", async (req, res) => {
   try {
     const data = await deezerService.getNewSongs(limit);
     
-    const simplifiedData = data.data.map((track: any) => ({
+    const simplifiedData = data.data.map((track: { id: number; title: string; cover_big?: string }) => ({
       songName: track.title,
       image: track.cover_big,
       track_id: track.id
@@ -167,7 +168,7 @@ router.get("/artist", async (req: Request, res: Response) => {
     const artist_data = await deezerService.getArtistData(artist_id);
     const artist_songs = await deezerService.getArtistSongs(artist_id);
 
-    const simplifiedSongs = artist_songs.data.map((track: any) => ({
+    const simplifiedSongs = artist_songs.data.map((track: { id: number; title: string; album?: { cover_medium?: string } }) => ({
       id: track.id,
       title: track.title,
       image: track.album?.cover_medium,
@@ -196,7 +197,7 @@ router.get("/album", async (req: Request, res: Response) => {
     }
 
     const album_data = await deezerService.getAlbumData(album_id);
-    const simplifiedTracks = album_data.tracks?.data.map((track: any) => ({
+    const simplifiedTracks = album_data.tracks?.data.map((track: { id: number; title: string; duration?: number; preview?: string; explicit_lyrics?: boolean }) => ({
       id: track.id,
       title: track.title,
       duration: track.duration,
