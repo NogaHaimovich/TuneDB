@@ -1,11 +1,10 @@
-import { useMemo } from "react";
+import { useMemo, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import "./styles.scss";
 import Card from "../../components/common/Card";
 import LoadingState from "../../components/common/LoadingState";
 import ErrorState from "../../components/common/ErrorState";
 import SkeletonCard from "../../components/common/Card/SkeletonCard";
-import Button from "../../components/common/Button";
 import useSearchResults from "../../hooks/useSearchResults";
 
 const SearchResultsPage = () => {
@@ -35,6 +34,32 @@ const SearchResultsPage = () => {
     ),
     []
   );
+
+  const observerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!hasMore || loadingMore) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          loadMore();
+        }
+      },
+      {
+        root: null,
+        threshold: 0.1,
+      }
+    );
+
+    const current = observerRef.current;
+    if (current) observer.observe(current);
+
+    return () => {
+      if (current) observer.unobserve(current);
+    };
+  }, [hasMore, loadingMore, loadMore]);
+
 
   if (!query) {
     return <p>No search query provided.</p>;
@@ -105,14 +130,10 @@ const SearchResultsPage = () => {
 
       {hasMore && (
         <div className="results_page_pagination">
-          <Button
-            type="button"
-            variant="secondary"
-            onClick={loadMore}
-            disabled={loadingMore}
-          >
-            {loadingMore ? "Loading..." : "Load more tracks"}
-          </Button>
+          <div
+            ref={observerRef}
+            className="infinite-scroll-trigger"
+          />
         </div>
       )}
     </div>
