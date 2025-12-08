@@ -1,15 +1,17 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button";
 import Disc from "../../components/common/Disc";
 import UserContext from "../../Contexts/UserContext";
 
 import "./styles.scss";
-import { signup, getUser } from "../../Services/userService";
+import { isAuthenticated, setToken } from "../../utils/auth";
 import type { SignUpForm } from "../../types";
 import InputField from "../../components/common/InputField";
+import { useSignUpUserMutation } from "../../store";
 
 
 const schema = z.object({
@@ -28,33 +30,41 @@ const schema = z.object({
 
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
   const {
-        register,
-        handleSubmit,
-        formState: {errors},
-    } = useForm<SignUpForm>({ resolver: zodResolver(schema) });
-    const [formError, setFormError] = useState("")
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignUpForm>({ resolver: zodResolver(schema) });
+  const [formError, setFormError] = useState("");
 
+  const [signUpUser] = useSignUpUserMutation();
 
-    const onSubmit = async (formData: SignUpForm) => {
-      try {
-            await signup(formData);
-            const user = getUser();
-            setUser(user);
-            window.location.href = "/";
-            
-        } catch (err: unknown) {
-            if (typeof err === "object" && err !== null && "response" in err) {
-                const resp = (err as { response?: { status?: number; data?: { message?: string } } }).response;
-                if (resp?.status === 400 && resp.data?.message) {
-                    setFormError(resp.data.message);
-                    return;
-                }
-            }
-            setFormError("Something went wrong. Please try again later.");
+  useEffect(() => {
+    if (isAuthenticated()) {
+      navigate("/");
+    }
+  }, [navigate]);
+
+  const onSubmit = async (formData: SignUpForm) => {
+    try {
+      setFormError("");
+      const response = await signUpUser(formData).unwrap();
+      setToken(response.token);
+      setUser(response.user);
+      navigate("/");
+    } catch (err: unknown) {
+      if (typeof err === "object" && err !== null && "data" in err) {
+        const errorData = (err as { data?: { message?: string } }).data;
+        if (errorData?.message) {
+          setFormError(errorData.message);
+          return;
         }
-    };
+      }
+      setFormError("Something went wrong. Please try again later.");
+    }
+  };
 
 
   return (

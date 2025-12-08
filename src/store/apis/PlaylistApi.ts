@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import type { AddToPlaylistRequest, AllPlaylistsResponse } from '../../types';
+import { getToken, signOut } from '../../utils/auth';
 
 interface AddToPlaylistResponse {
   success: boolean;
@@ -22,18 +24,36 @@ interface RenamePlaylistResponse {
   message?: string;
 }
 
+const baseQueryWithAuth = fetchBaseQuery({
+  baseUrl: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  prepareHeaders: (headers) => {
+    const token = getToken();
+    if (token) {
+      headers.set('authorization', `Bearer ${token}`);
+    }
+    return headers;
+  },
+});
+
+const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
+  let result = await baseQueryWithAuth(args, api, extraOptions);
+  
+  if (result.error && 'status' in result.error) {
+    const status = (result.error as FetchBaseQueryError).status;
+    if (status === 401 || status === 403) {
+      signOut();
+      if (window.location.pathname !== '/signin') {
+        window.location.href = '/signin';
+      }
+    }
+  }
+  
+  return result;
+};
+
 const playlistApi = createApi({
   reducerPath: 'playlist',
-  baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
-    prepareHeaders: (headers) => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
-      }
-      return headers;
-    }
-  }),
+  baseQuery: baseQueryWithReauth,
 
   tagTypes: ["Playlists"],
 

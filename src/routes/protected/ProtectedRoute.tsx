@@ -1,15 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Navigate } from 'react-router-dom';
-import UserContext from '../../Contexts/UserContext';
+import { isAuthenticated } from '../../utils/auth';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const { user } = useContext(UserContext);
-
-  if (!user) {
+  if (!isAuthenticated()) {
     return <Navigate to="/signin" replace />;
   }
 

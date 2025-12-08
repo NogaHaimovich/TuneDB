@@ -3,7 +3,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 import "./styles.scss";
 import AddToPlaylistIcon from "../../../assets/addToPlaylist.svg?react";
-import { getUser } from "../../../Services/userService";
+import { isAuthenticated } from "../../../utils/auth";
 import PlaylistSelector from "../PlaylistSelector";
 import { useAddToPlaylistMutation } from "../../../store";
 
@@ -27,9 +27,7 @@ const AddToPlaylistButton: React.FC<AddToPlaylistButtonProps> = ({
   const [addToPlaylist, { isSuccess, isError, error }] = useAddToPlaylistMutation();
 
   const handleClick = () => {
-    const user = getUser();
-    
-    if (!user) {
+    if (!isAuthenticated()) {
       window.location.href = "/signin";
       return;
     }

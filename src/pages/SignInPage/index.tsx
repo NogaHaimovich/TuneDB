@@ -9,9 +9,10 @@ import Disc from "../../components/common/Disc";
 import UserContext from "../../Contexts/UserContext";
 
 import "./styles.scss";
-import { getUser, signin } from "../../Services/userService";
+import { isAuthenticated, setToken } from "../../utils/auth";
 import type { SignInForm } from "../../types";
 import InputField from "../../components/common/InputField";
+import { useSignInUserMutation } from "../../store";
 
 const schema = z.object({
   email: z.string().email({ message: "Please enter valid email address." }).min(3),
@@ -30,23 +31,26 @@ const SignIn = () => {
 
   const [formError, setFormError] = useState("");
 
+  const [signInMutation] = useSignInUserMutation();
+
   useEffect(() => {
-    if (getUser()) {
+    if (isAuthenticated()) {
       window.location.href = "/";
     }
   }, []);
 
   const onSubmit = async (formData: SignInForm) => {
     try {
-      await signin(formData);
-      const user = getUser();
-      setUser(user);
+      setFormError("");
+      const response = await signInMutation(formData).unwrap();
+      setToken(response.token);
+      setUser(response.user);
       navigate(from);
     } catch (err: unknown) {
-      if (typeof err === "object" && err !== null && "response" in err) {
-        const resp = (err as { response?: { status?: number; data?: { message?: string } } }).response;
-        if (resp?.status === 400 && resp.data?.message) {
-          setFormError(resp.data.message);
+      if (typeof err === "object" && err !== null && "data" in err) {
+        const errorData = (err as { data?: { message?: string }; status?: number }).data;
+        if (errorData?.message) {
+          setFormError(errorData.message);
           return;
         }
       }

@@ -1,17 +1,19 @@
-import  { useEffect, useContext } from "react";
-import { signOut } from "../../Services/userService";
+import { useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { signOut } from "../../utils/auth";
 import UserContext from "../../Contexts/UserContext";
 
 const LogOut = () => {
-    const { setUser } = useContext(UserContext);
-    
-    useEffect(()=>{
-        signOut();
-        setUser(null);
-        window.location.href = "/";
-
-    }, [setUser])
+  const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
+  
+  useEffect(() => {
+    signOut();
+    setUser(null);
+    navigate("/", { replace: true });
+  }, [setUser, navigate]);
 
   return null;
-}
-export default LogOut 
+};
+
+export default LogOut; 
