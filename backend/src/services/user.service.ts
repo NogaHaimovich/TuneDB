@@ -16,7 +16,7 @@ export const signupUser = async (username: string, email: string, password: stri
     email,
     password: hashedPassword,
     playlists: [{
-      name: "favorite",
+      name: "Favorite",
       tracks: []
     }]
   });

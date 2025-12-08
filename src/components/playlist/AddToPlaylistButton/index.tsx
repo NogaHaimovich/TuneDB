@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import toast, { Toaster } from 'react-hot-toast';
 
 import "./styles.scss";
 import AddToPlaylistIcon from "../../../assets/addToPlaylist.svg?react";
 import { getUser } from "../../../Services/userService";
-import { addToPlaylist } from "../../../Services/playlistService";
 import PlaylistSelector from "../PlaylistSelector";
+import { useAddToPlaylistMutation } from "../../../store";
 
 interface AddToPlaylistButtonProps {
   trackId: string;
@@ -23,6 +23,8 @@ const AddToPlaylistButton: React.FC<AddToPlaylistButtonProps> = ({
   image 
 }) => {
   const [isPlaylistSelectorOpen, setIsPlaylistSelectorOpen] = useState(false);
+  const [lastPlaylistName, setLastPlaylistName] = useState<string>("");
+  const [addToPlaylist, { isSuccess, isError, error }] = useAddToPlaylistMutation();
 
   const handleClick = () => {
     const user = getUser();
@@ -35,25 +37,38 @@ const AddToPlaylistButton: React.FC<AddToPlaylistButtonProps> = ({
     setIsPlaylistSelectorOpen(true);
   };
 
-  const handlePlaylistSelect = async (playlistName: string) => {
-    try {
-      await addToPlaylist(trackId, {
+  const handlePlaylistSelect = (playlistName: string) => {
+    setLastPlaylistName(playlistName);
+    addToPlaylist({
+      trackId,
+      trackData: {
         title,
         artist,
         album,
         image
-      }, playlistName);
-      
-      toast.success(`Track added to "${playlistName}"!`);
-    } catch (error: any) {
-      if (error.response?.data?.error === "Track already in playlist") {
-        toast.error(`Track is already in "${playlistName}"!`);
+      },
+      playlistName
+    });
+  };
+
+  useEffect(() => {
+    if (isSuccess && lastPlaylistName) {
+      toast.success(`Track added to "${lastPlaylistName}"!`);
+      setIsPlaylistSelectorOpen(false);
+    }
+  }, [isSuccess, lastPlaylistName]);
+
+  useEffect(() => {
+    if (isError) {
+      const errorData = error && 'data' in error ? (error.data as any) : null;
+      if (errorData?.error === "Track already in playlist") {
+        toast.error(`Track is already in "${lastPlaylistName}"!`);
       } else {
         toast.error("Failed to add track to playlist. Please try again.");
         console.error("Error adding track to playlist:", error);
       }
     }
-  };
+  }, [isError, error, lastPlaylistName]);
 
   const handleCloseSelector = () => {
     setIsPlaylistSelectorOpen(false);

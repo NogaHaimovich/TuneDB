@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./styles.scss";
-import { getUserPlaylists } from "../../../Services/playlistService";
-import { createPlaylist } from "../../../Services/playlistService";
 import { getErrorMessage } from "../../../utils/get_error_message";
+import { useCreatePlaylistMutation, useFetchAllPlaylistsDataQuery } from "../../../store";
 
 interface PlaylistSelectorProps {
   isOpen: boolean;
@@ -17,32 +16,17 @@ const PlaylistSelector: React.FC<PlaylistSelectorProps> = ({
   onSelectPlaylist,
   trackTitle
 }) => {
-  const [playlists, setPlaylists] = useState<string[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [newPlaylistName, setNewPlaylistName] = useState("");
   const [creating, setCreating] = useState(false);
+  const [createPlaylistMutation] = useCreatePlaylistMutation();
 
-  useEffect(() => {
-    if (isOpen) {
-      fetchPlaylists();
-    }
-  }, [isOpen]);
+  const { data, error: rtkError, isLoading, refetch } = useFetchAllPlaylistsDataQuery();
+  const playlists= data?.playlists.map(playlist=> playlist.name) ?? []
+  const error = rtkError ? getErrorMessage(rtkError) : null;
 
-  const fetchPlaylists = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const playlistsData = await getUserPlaylists();
-      setPlaylists(playlistsData);
-    } catch (err) {
-      setError("Failed to load playlists");
-      console.error("Error fetching playlists:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  console.log(playlists)
+
 
   const handlePlaylistSelect = (playlistName: string) => {
     onSelectPlaylist(playlistName);
@@ -54,15 +38,12 @@ const PlaylistSelector: React.FC<PlaylistSelectorProps> = ({
     if (!newPlaylistName.trim()) return;
 
     setCreating(true);
-    setError(null);
     try {
-      await createPlaylist(newPlaylistName.trim());
-      await fetchPlaylists(); 
+      createPlaylistMutation(newPlaylistName)
       setNewPlaylistName("");
       setShowCreateForm(false);
     } catch (err: unknown) {
-      const error_message = getErrorMessage(err)
-      setError(error_message || "Failed to create playlist");
+      console.log("error")
     } finally {
       setCreating(false);
     }
@@ -80,7 +61,7 @@ const PlaylistSelector: React.FC<PlaylistSelectorProps> = ({
         </div>
         
         <div className="playlist-selector-content">
-          {loading ? (
+          {isLoading ? (
             <div className="loading">Loading playlists...</div>
           ) : error ? (
             <div className="error">{error}</div>

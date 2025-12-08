@@ -1,67 +1,38 @@
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { getAllPlaylistsData, type PlaylistWithTracks } from "../../Services/playlistService";
 import type { UsePlaylistDetailReturn } from "./types";
 import { getErrorMessage } from "../../utils/get_error_message";
+import { useFetchAllPlaylistsDataQuery } from "../../store";
 
 
 const usePlaylistDetails = (): UsePlaylistDetailReturn => {
     const { name } = useParams<{ name: string }>();
-    const [playlist, setPlaylist] = useState<PlaylistWithTracks | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
+    const { data, isLoading, error: queryError, refetch } = useFetchAllPlaylistsDataQuery();
 
-    useEffect(() => {
-        let isMounted = true;
-        (async () => {
-        try {
-            const { playlists } = await getAllPlaylistsData();
-            if (isMounted) {
-            const foundPlaylist = playlists.find(p => 
-                p.name === decodeURIComponent(name || '')
-            );
-            if (foundPlaylist) {
-                setPlaylist(foundPlaylist);
-            } else {
-                setError("Playlist not found");
-            }
-            }
-        } catch (err: unknown) {
-            const error_message = getErrorMessage(err)
-            if (isMounted) setError(error_message || "Failed to load playlist");
-        } finally {
-            if (isMounted) setLoading(false);
+    const playlist = useMemo(() => {
+        if (!data?.playlists) return null;
+        return data.playlists.find(p => 
+            p.name === decodeURIComponent(name || '')
+        ) || null;
+    }, [data, name]);
+
+    const error = useMemo(() => {
+        if (queryError) {
+            return getErrorMessage(queryError) || "Failed to load playlist";
         }
-        })();
-        return () => {
-        isMounted = false;
-        };
-    }, [name]);
+        if (!isLoading && data && !playlist) {
+            return "Playlist not found";
+        }
+        return null;
+    }, [queryError, isLoading, data, playlist]);
 
     const refresh = async () => {
-        setLoading(true);
-        setError(null);
-        try {
-            const { playlists } = await getAllPlaylistsData();
-            const foundPlaylist = playlists.find(p => 
-                p.name === decodeURIComponent(name || '')
-            );
-            if (foundPlaylist) {
-                setPlaylist(foundPlaylist);
-            } else {
-                setError("Playlist not found");
-            }
-        } catch (err: unknown) {
-            const error_message = getErrorMessage(err)
-            setError(error_message|| "Failed to load playlist");
-        } finally {
-            setLoading(false);
-        }
+        await refetch();
     };
 
     return {
         playlist,
-        loading,
+        loading: isLoading,
         error,
         refresh,
     };

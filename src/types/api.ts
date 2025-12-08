@@ -88,3 +88,29 @@ export interface UseDataReturn<T> {
   error: string | null;
   refetch: () => void;
 }
+
+export interface AddToPlaylistRequest {
+  trackId: string;
+  title?: string;
+  artist?: string;
+  album?: string;
+  image?: string;
+}
+
+export interface PlaylistTrack {
+  trackId: string;
+  title?: string;
+  artist?: string;
+  album?: string;
+  image?: string;
+}
+
+export interface PlaylistWithTracks {
+  name: string;
+  tracks: PlaylistTrack[];
+}
+
+export interface AllPlaylistsResponse {
+  playlists: PlaylistWithTracks[];
+}
+

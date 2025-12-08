@@ -9,6 +9,8 @@ import './styles/settings.scss';
 import { getUser } from "./Services/userService";
 import PublicRoutes from "./routes/public";
 import ProtectedRoutes from "./routes/protected";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 function App() {
   const [user, setUser] = useState(getUser()); 
@@ -27,19 +29,21 @@ function App() {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
-      <BrowserRouter>
-        <div className="app-container">
-          <NavBar />
-          <main>
-            <Routes>
-              {PublicRoutes()}
-              {ProtectedRoutes()}
-            </Routes>
-          </main>
-        </div>
-      </BrowserRouter>
-    </UserContext.Provider>
+    <Provider store={store}>
+      <UserContext.Provider value={{ user, setUser }}>
+        <BrowserRouter>
+          <div className="app-container">
+            <NavBar />
+            <main>
+              <Routes>
+                {PublicRoutes()}
+                {ProtectedRoutes()}
+              </Routes>
+            </main>
+          </div>
+        </BrowserRouter>
+      </UserContext.Provider>
+    </Provider>
   );
 }
 

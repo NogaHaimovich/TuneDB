@@ -1,15 +1,11 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import type { UsePlaylistManagerReturn } from "./types";
-import { getAllPlaylistsData, removePlaylistClicked, renamePlaylist, type PlaylistWithTracks } from "../../Services/playlistService";
 import { getErrorMessage } from "../../utils/get_error_message";
+import { useFetchAllPlaylistsDataQuery, useRemovePlaylistMutation, useRenamePlaylistMutation } from "../../store";
 
 const usePlaylistManager = (): UsePlaylistManagerReturn => {
-  const [playlists, setPlaylists] = useState<PlaylistWithTracks[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
   const [isEditPopupOpen, setIsEditPopupOpen] = useState<boolean>(false);
   const [editingPlaylist, setEditingPlaylist] = useState<string | null>(null);
   const [newPlaylistName, setNewPlaylistName] = useState<string>("");
@@ -17,35 +13,12 @@ const usePlaylistManager = (): UsePlaylistManagerReturn => {
 
   const navigate = useNavigate();
 
-  const refreshPlaylists = useCallback(async () => {
-    try {
-      const { playlists } = await getAllPlaylistsData();
-      setPlaylists(playlists);
-    } catch (err: unknown) {
-      const error_message = getErrorMessage(err)
-      setError(error_message|| "Failed to load playlists");
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const [renamePlaylistMutation] = useRenamePlaylistMutation()
+  const [removePlaylistMutation] = useRemovePlaylistMutation()
+  const { data, error: rtkError, isLoading, refetch } = useFetchAllPlaylistsDataQuery();
+  const playlists = data?.playlists ?? [];
 
-  useEffect(() => {
-    let isMounted = true;
-    
-    const loadPlaylists = async () => {
-      setLoading(true);
-      setError(null);
-      await refreshPlaylists();
-    };
-
-    if (isMounted) {
-      loadPlaylists();
-    }
-
-    return () => {
-      isMounted = false;
-    };
-  }, [refreshPlaylists]);
+  const error = rtkError ? getErrorMessage(rtkError) : null;
 
   const handleEdit = useCallback((playlistName: string) => {
     setEditingPlaylist(playlistName);
@@ -54,25 +27,28 @@ const usePlaylistManager = (): UsePlaylistManagerReturn => {
     setPopupError("");
   }, []);
 
-  const handleDelete = useCallback(async (playlistName: string) => {
-    if (!confirm(`Are you sure you want to delete "${playlistName}"?`)) {
-      return;
-    }
+  const handleDelete = useCallback(
+    async (playlistName: string) => {
+      if (!confirm(`Are you sure you want to delete "${playlistName}"?`)) return;
 
-    try {
-      await removePlaylistClicked(playlistName);
-      toast.success('Playlist removed successfully');
-      await refreshPlaylists();
-    } catch (err: unknown) {
-      const error_message = getErrorMessage(err)
-      toast.error('Error removing the playlist');
-      console.error(`Error removing ${playlistName}: `, error_message);
-    }
-  }, [refreshPlaylists]);
+      try {
+        removePlaylistMutation(playlistName);
+        toast.success("Playlist removed successfully");
+      } catch (err: unknown) {
+        const error_message = getErrorMessage(err);
+        toast.error(error_message || "Error removing the playlist");
+        console.error(`Error removing ${playlistName}:`, error_message);
+      }
+    },
+    [refetch]
+  );
 
-  const handleViewMore = useCallback((playlistName: string) => {
-    navigate(`/playlist/${encodeURIComponent(playlistName)}`);
-  }, [navigate]);
+  const handleViewMore = useCallback(
+    (playlistName: string) => {
+      navigate(`/playlist/${encodeURIComponent(playlistName)}`);
+    },
+    [navigate]
+  );
 
   const handleNameChange = useCallback((value: string) => {
     setNewPlaylistName(value);
@@ -93,36 +69,43 @@ const usePlaylistManager = (): UsePlaylistManagerReturn => {
 
     if (!editingPlaylist) return;
 
-    try {
-      await renamePlaylist(editingPlaylist, newPlaylistName);
-      await refreshPlaylists();
+    if (editingPlaylist.trim() === newPlaylistName.trim()) {
       handleCloseEditPopup();
-      toast.success('Playlist renamed successfully');
-    } catch (err: unknown) {
-      const error_message = getErrorMessage(err)
-      setPopupError(error_message || "Error renaming playlist");
-      console.error("Rename playlist error:", error);
+      return;
     }
-  }, [editingPlaylist, newPlaylistName, refreshPlaylists, handleCloseEditPopup]);
+
+    try {
+      renamePlaylistMutation({oldName:editingPlaylist, newName:newPlaylistName})
+      handleCloseEditPopup();
+      toast.success("Playlist renamed successfully");
+    } catch (err: unknown) {
+      const error_message = getErrorMessage(err);
+      setPopupError(error_message || "Error renaming playlist");
+      console.error("Rename playlist error:", error_message);
+    }
+  }, [editingPlaylist, newPlaylistName, refetch, handleCloseEditPopup]);
+
+  const refreshPlaylists = useCallback(async () => {
+    await refetch();
+  }, [refetch]);
 
   return {
     playlists,
-    loading,
+    loading: isLoading,
     error,
-    
+
     isEditPopupOpen,
     editingPlaylist,
     newPlaylistName,
     popupError,
-    
+
     handleEdit,
     handleDelete,
     handleViewMore,
     handleNameChange,
     handleCloseEditPopup,
     handleSaveEdit,
-    
-    
+
     refreshPlaylists,
   };
 };
