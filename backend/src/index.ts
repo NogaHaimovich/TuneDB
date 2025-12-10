@@ -1,6 +1,3 @@
-import dotenv from "dotenv";
-dotenv.config();
-
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
@@ -10,9 +7,10 @@ import userRoutes from "./routes/user.routes.js";
 import playlistRoutes from "./routes/playlist.routes.js";
 
 import connectDB from "./db/db.js";
+import { config } from "./config/index.js"; 
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = config.port; 
 
 connectDB();
 
@@ -22,8 +20,8 @@ const allowedOrigins = [
   "https://tunedb.netlify.app"
 ];
 
-if (process.env.FRONTEND_URL) {
-  allowedOrigins.push(process.env.FRONTEND_URL);
+if (config.frontendUrl) { 
+  allowedOrigins.push(config.frontendUrl);
 }
 
 app.use(

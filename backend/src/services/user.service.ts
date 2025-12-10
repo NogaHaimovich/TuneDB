@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/users.js";
+import { config } from "../config/index.js"; 
 
 export const signupUser = async (username: string, email: string, password: string) => {
   let existing = await User.findOne({ email });
@@ -29,33 +30,29 @@ export const signupUser = async (username: string, email: string, password: stri
     email: user.email,
   };
 
-  const secret = process.env.JWTSECRET || "defaultsecret";
-  const token = jwt.sign(newUser, secret, { expiresIn: "1h" });
+  const token = jwt.sign(newUser, config.jwtSecret, { expiresIn: "1h" }); 
 
   return { token, user: newUser };
 };
 
+export const signinUser = async (email: string, password: string) => {
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new Error("User does not exist, please signup");
+  }
 
-export const signinUser = async ( email: string, password: string) => {
-    const user = await User.findOne({ email });
-    if (!user) {
-        throw new Error("User does not exist, please signup");
-    }
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    throw new Error("Incorrect password");
+  }
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-        throw new Error("Incorrect password");
-    }
+  const newUser = {
+    id: user.id,
+    username: user.username,
+    email: user.email,
+  };
 
-    const newUser = {
-        id: user.id,
-        username: user.username,
-        email: user.email,
-    };
+  const token = jwt.sign(newUser, config.jwtSecret, { expiresIn: "1h" });
 
-    const secret = process.env.JWTSECRET || "defaultsecret";
-
-    const token = jwt.sign(newUser, secret, { expiresIn: "1h" });
-
-    return { token, user: newUser };
+  return { token, user: newUser };
 };
