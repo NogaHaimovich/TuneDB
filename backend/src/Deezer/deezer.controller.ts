@@ -1,21 +1,16 @@
-import { Router } from "express";
-import deezerService from "../services/dezzer.service.js";
+import deezerService from "./deezer.service.js";
 import type { Request, Response } from "express";
 
 
-export const router = Router();
 
-router.get("/topRatedSongs", async (req: Request, res: Response) => {
-  const limit = parseInt(req.query.limit as string) || 5;
-
+export const getTopRatedSongs = async (req: Request, res: Response) => {
   try {
-    const data = await deezerService.getTopRatedSongs(limit);
-
-
-    const simplifiedData = data.data.map((track: { id: number; title: string; artist?: { picture_big?: string } }) => ({
-      songName: track.title,
-      image: track.artist?.picture_big,
-      track_id: track.id
+        const limit = parseInt(req.query.limit as string) || 5;
+        const data = await deezerService.getTopRatedSongs(limit);
+        const simplifiedData = data.data.map((track: { id: number; title: string; artist?: { picture_big?: string } }) => ({
+            songName: track.title,
+            image: track.artist?.picture_big,
+            track_id: track.id
     }));
     
     res.json({
@@ -25,34 +20,33 @@ router.get("/topRatedSongs", async (req: Request, res: Response) => {
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch chart tracks from Deezer" });
   }
-});
+};
 
 
-router.get("/topRatedArtists", async (req: Request, res: Response) => {
-  const limit = parseInt(req.query.limit as string) || 5;
-
+export const getTopRatedArtists = async (req: Request, res: Response) => {
   try {
-    const data = await deezerService.getTopRatedArtists(limit);    
-    const artists = data.data ?? [];
-    const simplifiedData = artists.map((artist: { id: number; name: string; picture_big?: string }) => ({
-      artistName: artist.name,
-      image: artist.picture_big,
-      artist_id: artist.id
-    }));
+        const limit = parseInt(req.query.limit as string) || 5;
+
+        const data = await deezerService.getTopRatedArtists(limit);    
+        const artists = data.data ?? [];
+        const simplifiedData = artists.map((artist: { id: number; name: string; picture_big?: string }) => ({
+            artistName: artist.name,
+            image: artist.picture_big,
+            artist_id: artist.id
+        }));
     
-    res.json({
-      total: data.total,
-      tracks: simplifiedData
-    });
+        res.json({
+        total: data.total,
+        tracks: simplifiedData
+        });
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch chart tracks from Deezer" });
+    res.status(500).json({ error: "Failed to fetch chart artists from Deezer" });
   }
-});
+};
 
-router.get("/newSongs", async (req, res) => {
-  const limit = parseInt(req.query.limit as string) || 5;
-
+export const getNewSongs = async (req: Request, res: Response) => {
   try {
+    const limit = parseInt(req.query.limit as string) || 5;
     const data = await deezerService.getNewSongs(limit);
     
     const simplifiedData = data.data.map((track: { id: number; title: string; cover_big?: string }) => ({
@@ -68,10 +62,10 @@ router.get("/newSongs", async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch chart tracks from Deezer" });
   }
-});
+};
 
 
-router.get("/search", async (req: Request, res: Response) => {
+export const getSearchResults = async (req: Request, res: Response) => {
   try {
     const query = req.query.q as string;
     const page = Number(req.query.page) || 1;
@@ -100,9 +94,9 @@ router.get("/search", async (req: Request, res: Response) => {
     console.error("Search route error:", error);
     res.status(500).json({ error: "Failed to search" });
   }
-});
+};
 
-router.get("/suggest", async (req: Request, res: Response) => {
+export const getSuggestions = async (req: Request, res: Response) => {
   try {
     const query = req.query.q as string;
     if (!query) {
@@ -115,9 +109,9 @@ router.get("/suggest", async (req: Request, res: Response) => {
     console.error("Search route error:", error);
     res.status(500).json({ error: "Failed to search" });
   }
-});
+};
 
-router.get("/record", async (req: Request, res: Response) => {
+export const getRecordDetails = async (req: Request, res: Response) => {
   try {
     const record_id = req.query.id as string;
     if (!record_id) {
@@ -156,9 +150,9 @@ router.get("/record", async (req: Request, res: Response) => {
     console.error("Record route error:", error);
     res.status(500).json({ error: "Failed to fetch record data" });
   }
-});
+};
 
-router.get("/artist", async (req: Request, res: Response) => {
+export const getArtistDetails = async (req: Request, res: Response) => {
   try {
     const artist_id = req.query.id as string;
     if (!artist_id) {
@@ -187,9 +181,9 @@ router.get("/artist", async (req: Request, res: Response) => {
     console.error("Artist route error: ", error);
     res.status(500).json({ error: "Failed to fetch artist data" });
   }
-});
+};
 
-router.get("/album", async (req: Request, res: Response) => {
+export const getAlbumDetails = async (req: Request, res: Response) => {
   try{
     const album_id = req.query.id as string;
     if(!album_id){
@@ -220,11 +214,10 @@ router.get("/album", async (req: Request, res: Response) => {
 
 
     res.json(simplifiedAlbum);
-  }catch(error){
+  } catch (error) {
     console.error("Album route error: ", error);
     res.status(500).json({ error: "Failed to fetch album data" });
   }
-})
+};
 
 
-export default router;

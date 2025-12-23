@@ -1,6 +1,6 @@
 import User from "../models/users.js";
 import mongoose from "mongoose";
-import type { Playlist, PlaylistTrack, UserWithPlaylists } from "./types.js";
+import type { UserWithPlaylists, Playlist, PlaylistTrack } from "../types/types.js";
 
 type Savable = { save: () => Promise<unknown> };
 

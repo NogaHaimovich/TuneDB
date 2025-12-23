@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { DeezerAlbumResponse, DeezerArtistResponse, DeezerArtistTopTracksResponse, DeezerChartTracksResponse, DeezerSearchItem, DeezerSearchResponse, DeezerTrackDetails } from "./types.js";
+import type { DeezerAlbumResponse, DeezerArtistResponse, DeezerArtistTopTracksResponse, DeezerChartTracksResponse, DeezerSearchItem, DeezerSearchResponse, DeezerTrackDetails } from "../types/types.js";
 
 const DEEZER_API_BASE = "https://api.deezer.com";
 
@@ -88,7 +88,7 @@ const getArtistData = async (artist_id: string): Promise<DeezerArtistResponse> =
     return response.data
   } catch(error){
     console.error("Deezer Artist API error", error)
-    throw new Error("Failed to fetch atrist data from Dezzer API")
+    throw new Error("Failed to fetch artist data from Deezer API")
   }
 }
 
