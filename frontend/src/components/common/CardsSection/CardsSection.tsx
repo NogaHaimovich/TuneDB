@@ -2,7 +2,7 @@ import "./styles.scss";
 import { useState, useEffect } from "react";
 import type { CardSectionProps } from "../../../types/components";
 import SkeletonCard from "../Card/SkeletonCard";
-import Card from "../Card";
+import Card from "../Card/Card";
 
 const CardSection = ({
   title,

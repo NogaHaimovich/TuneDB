@@ -1,10 +1,10 @@
 import { useMemo } from "react";
 import "./styles.scss";
-import PlaylistGrid from "../../components/playlist/PlaylistGrid";
-import EditPlaylistNamePopup from "../../components/playlist/EditPlaylistNamePopup";
+import PlaylistGrid from "../../components/playlist/PlaylistGrid/PlaylistGrid";
+import EditPlaylistNamePopup from "../../components/playlist/EditPlaylistNamePopup/EditPlaylistNamePopup";
 import usePlaylistManager from "../../hooks/usePlaylistManager";
-import LoadingState from "../../components/common/LoadingState";
-import ErrorState from "../../components/common/ErrorState";
+import LoadingState from "../../components/common/LoadingState/LoadingState";
+import ErrorState from "../../components/common/ErrorState/ErrorState";
 import SkeletonCard from "../../components/common/Card/SkeletonCard";
 
 const PlaylistsListPage = () => {

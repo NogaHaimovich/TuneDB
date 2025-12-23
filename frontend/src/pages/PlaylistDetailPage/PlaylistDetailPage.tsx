@@ -1,10 +1,10 @@
 import { useMemo } from "react";
 import "./styles.scss";
-import PlaylistDetailsHeader from "../../components/playlist/PlaylistDetailsHeader";
-import PlaylistDetailTracksGrid from "../../components/playlist/PlaylistDetailTracksGrid";
+import PlaylistDetailsHeader from "../../components/playlist/PlaylistDetailsHeader/PlaylistDetailsHeader";
+import PlaylistDetailTracksGrid from "../../components/playlist/PlaylistDetailTracksGrid/PlaylistDetailTracksGrid";
 import usePlaylistDetails from "../../hooks/usePlaylistDetails";
-import LoadingState from "../../components/common/LoadingState";
-import ErrorState from "../../components/common/ErrorState";
+import LoadingState from "../../components/common/LoadingState/LoadingState";
+import ErrorState from "../../components/common/ErrorState/ErrorState";
 import SkeletonCard from "../../components/common/Card/SkeletonCard";
 
 const PlaylistDetailPage = () => {

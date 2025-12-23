@@ -1,5 +1,5 @@
-import HeroSection from "./heroSection";
-import CardSection from "../../components/common/CardsSection";
+import HeroSection from "./heroSection/HeroSection";
+import CardSection from "../../components/common/CardsSection/CardsSection";
 import "./styles.scss";
 import useHomePageData from "../../hooks/useHomePageData";
 

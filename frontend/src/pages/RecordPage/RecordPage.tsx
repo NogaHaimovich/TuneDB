@@ -2,10 +2,10 @@ import { useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import "./styles.scss";
-import RecordHeader from "../../components/record/RecordHeader";
-import RecordInfo from "../../components/record/RecordInfo";
-import LoadingState from "../../components/common/LoadingState";
-import ErrorState from "../../components/common/ErrorState";
+import RecordHeader from "../../components/record/RecordHeader/RecordHeader";
+import RecordInfo from "../../components/record/RecordInfo/RecordInfo";
+import LoadingState from "../../components/common/LoadingState/LoadingState";
+import ErrorState from "../../components/common/ErrorState/ErrorState";
 import useRecordData from "../../hooks/useRecordData";
 
 const RecordPage = () => {

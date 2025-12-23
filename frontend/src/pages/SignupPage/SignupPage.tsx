@@ -3,14 +3,14 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
-import Button from "../../components/common/Button";
-import Disc from "../../components/common/Disc";
+import Button from "../../components/common/Button/Button";
+import Disc from "../../components/common/Disc/Disc";
 import UserContext from "../../Contexts/UserContext";
 
 import "./styles.scss";
 import { isAuthenticated, setToken } from "../../utils/auth";
 import type { SignUpForm } from "../../types";
-import InputField from "../../components/common/InputField";
+import InputField from "../../components/common/InputField/InputField";
 import { useSignUpUserMutation } from "../../store";
 
 

@@ -1,7 +1,9 @@
 
-import "./styles.scss";
-import type { ArtistHeaderProps } from "./types";
+import type { SimplifiedArtist } from "../../types";
 
+export interface ArtistHeaderProps {
+    artist: SimplifiedArtist | null;
+}
 
 const ArtistHeader = ({
     artist,

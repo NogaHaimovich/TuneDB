@@ -1,9 +1,9 @@
 import { Route } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 
-import PlaylistDetailPage from "../../pages/PlaylistDetailPage";
-import PlaylistsListPage from "../../pages/PlaylistsListPage";
-import LogOut from "../../pages/LogOutPage";
+import PlaylistDetailPage from "../../pages/PlaylistDetailPage/PlaylistDetailPage";
+import PlaylistsListPage from "../../pages/PlaylistsListPage/PlaylistsListPage";
+import LogOut from "../../pages/LogOutPage/LogOutPage";
 
 const ProtectedRoutes = () => {
   return [

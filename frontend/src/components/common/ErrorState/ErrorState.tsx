@@ -1,9 +1,9 @@
-import React from "react";
+import  { type FC } from "react";
 import "./styles.scss";
-import Button from "../Button";
+import Button from "../Button/Button";
 import type { ErrorStateProps } from "../../../types/components";
 
-const ErrorState: React.FC<ErrorStateProps> = ({
+const ErrorState: FC<ErrorStateProps> = ({
   title = "Something went wrong",
   description = "Please try again or come back later.",
   onRetry,

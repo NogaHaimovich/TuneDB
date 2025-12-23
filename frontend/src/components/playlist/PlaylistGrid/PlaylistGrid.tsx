@@ -1,6 +1,6 @@
 import type { PlaylistGridProps } from "./types";
 import "./styles.scss";
-import PlaylistCard from "../PlaylistCard";
+import PlaylistCard from "../PlaylistCard/PlaylistCard";
 
 const PlaylistGrid = ({
   playlists,

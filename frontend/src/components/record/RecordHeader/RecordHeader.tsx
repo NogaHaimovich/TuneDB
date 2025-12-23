@@ -1,4 +1,4 @@
-import AddToPlaylistButton from "../../playlist/AddToPlaylistButton";
+import AddToPlaylistButton from "../../playlist/AddToPlaylistButton/AddToPlaylistButton";
 import type { RecordHeaderProps } from "./types";
 import "./styles.scss"
 

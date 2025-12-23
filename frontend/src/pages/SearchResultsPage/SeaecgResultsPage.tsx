@@ -1,9 +1,9 @@
 import { useMemo, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import "./styles.scss";
-import Card from "../../components/common/Card";
-import LoadingState from "../../components/common/LoadingState";
-import ErrorState from "../../components/common/ErrorState";
+import Card from "../../components/common/Card/Card";
+import LoadingState from "../../components/common/LoadingState/LoadingState";
+import ErrorState from "../../components/common/ErrorState/ErrorState";
 import SkeletonCard from "../../components/common/Card/SkeletonCard";
 import useSearchResults from "../../hooks/useSearchResults";
 

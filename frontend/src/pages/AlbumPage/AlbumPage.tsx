@@ -2,10 +2,10 @@ import "./styles.scss";
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import useAlbumData from "../../hooks/useAlbumData";
-import AlbumHeader from "../../components/album/AlbumHeader";
-import AlbumTracksList from "../../components/album/AlbumTracksList";
-import LoadingState from "../../components/common/LoadingState";
-import ErrorState from "../../components/common/ErrorState";
+import AlbumHeader from "../../components/album/AlbumHeader/AlbumHeader";
+import AlbumTracksList from "../../components/album/AlbumTracksList/AlbumTracksList";
+import LoadingState from "../../components/common/LoadingState/LoadingState";
+import ErrorState from "../../components/common/ErrorState/ErrorState";
 
 const AlbumPage = () => {
   const { id: album_id } = useParams<{ id: string }>();

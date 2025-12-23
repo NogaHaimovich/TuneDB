@@ -4,7 +4,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import "./styles.scss";
 import AddToPlaylistIcon from "../../../assets/addToPlaylist.svg?react";
 import { isAuthenticated } from "../../../utils/auth";
-import PlaylistSelector from "../PlaylistSelector";
+import PlaylistSelector from "../PlaylistSelector/PlaylistSelector";
 import { useAddToPlaylistMutation } from "../../../store";
 
 interface AddToPlaylistButtonProps {

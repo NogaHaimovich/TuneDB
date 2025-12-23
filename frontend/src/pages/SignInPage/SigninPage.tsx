@@ -4,14 +4,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import Button from "../../components/common/Button";
-import Disc from "../../components/common/Disc";
+import Button from "../../components/common/Button/Button";
+import Disc from "../../components/common/Disc/Disc";
 import UserContext from "../../Contexts/UserContext";
 
 import "./styles.scss";
 import { isAuthenticated, setToken } from "../../utils/auth";
 import type { SignInForm } from "../../types";
-import InputField from "../../components/common/InputField";
+import InputField from "../../components/common/InputField/InputField";
 import { useSignInUserMutation } from "../../store";
 
 const schema = z.object({

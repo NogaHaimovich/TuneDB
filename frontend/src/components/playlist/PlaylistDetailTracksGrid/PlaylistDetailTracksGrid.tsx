@@ -1,6 +1,6 @@
 import type { PlaylistDetailTracksGridProp } from "./types";
 import "./styles.scss";
-import Card from "../../common/Card";
+import Card from "../../common/Card/Card";
 
 const PlaylistDetailTracksGrid = ({
     playlist,

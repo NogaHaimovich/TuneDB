@@ -1,7 +1,12 @@
 import "./styles.scss";
 import { Link } from "react-router-dom";
-import type { AlbumTracksListProps } from "./types";
-import AddToPlaylistButton from "../../playlist/AddToPlaylistButton";
+import AddToPlaylistButton from "../../playlist/AddToPlaylistButton/AddToPlaylistButton";
+
+import type { SimplifiedAlbum } from "../../../types/music";
+
+export interface AlbumTracksListProps {
+    album: SimplifiedAlbum | null;
+}
 
 const AlbumTracksList = ({
     album,

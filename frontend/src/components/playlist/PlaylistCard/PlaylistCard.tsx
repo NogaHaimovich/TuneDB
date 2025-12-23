@@ -2,8 +2,8 @@ import type { PlaylistCardProps } from "./types";
 import { Link } from "react-router-dom";
 
 import "./styles.scss"
-import Button from "../../common/Button";
-import Card from "../../common/Card";
+import Button from "../../common/Button/Button";
+import Card from "../../common/Card/Card";
 
 const PlaylistCard = ({playlist, onEdit, onDelete, onViewMore}: PlaylistCardProps) =>{
     const visibleTracks = playlist.tracks.slice(0, 5); 

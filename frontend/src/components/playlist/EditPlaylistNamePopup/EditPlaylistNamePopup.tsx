@@ -1,6 +1,6 @@
 import type { EditPlaylistNamePopupProps } from "./types";
 import "./styles.scss"
-import Button from "../../common/Button";
+import Button from "../../common/Button/Button";
 
 const EditPlaylistNamePopup = ({ isOpen, initialName, error, onChange, onClose, onSave}: EditPlaylistNamePopupProps) => {
   if (!isOpen) return null;

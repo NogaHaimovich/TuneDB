@@ -1,11 +1,11 @@
 import { Route } from 'react-router-dom'
-import HomePage from "../../pages/HomePage";
-import SignIn from "../../pages/SignInPage";
-import SignUpPage from "../../pages/SignupPage";
-import SearchResultsPage from "../../pages/SearchResultsPage";
-import AlbumPage from "../../pages/AlbumPage";
-import ArtistPage from "../../pages/ArtistPage";
-import RecordPage from '../../pages/RecordPage';
+import HomePage from "../../pages/HomePage/HomePage";
+import SignIn from "../../pages/SignInPage/SigninPage";
+import SignUpPage from "../../pages/SignupPage/SignupPage";
+import SearchResultsPage from "../../pages/SearchResultsPage/SeaecgResultsPage";
+import AlbumPage from "../../pages/AlbumPage/AlbumPage";
+import ArtistPage from "../../pages/ArtistPage/ArtistPage";
+import RecordPage from '../../pages/RecordPage/RecordPage';
 
 const PublicRoutes = () => {
   return [

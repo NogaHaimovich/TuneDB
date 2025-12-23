@@ -1,12 +1,12 @@
 import { useParams } from "react-router-dom";
 import "./styles.scss";
 import { useMemo } from "react";
-import Card from "../../components/common/Card";
-import ArtistHeader from "../../components/artist/ArtistHeader";
+import Card from "../../components/common/Card/Card";
 import useArtistData from "../../hooks/useArtistData";
-import ErrorState from "../../components/common/ErrorState";
-import LoadingState from "../../components/common/LoadingState";
+import ErrorState from "../../components/common/ErrorState/ErrorState";
+import LoadingState from "../../components/common/LoadingState/LoadingState";
 import SkeletonCard from "../../components/common/Card/SkeletonCard";
+import ArtistHeader from "../../components/artistHeader/ArtistHeader";
 
 const ArtistPage = () => {
   const { id: artist_id } = useParams<{ id: string }>();
