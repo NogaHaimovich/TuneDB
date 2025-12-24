@@ -4,11 +4,15 @@ import { getAllPlaylists, addTrack, createNewPlaylist, getAllPlaylistsWithTracks
 
 const router = Router();
 
+
 router.get("/", authMiddleware, getAllPlaylists);
-router.post("/:trackId", authMiddleware, addTrack);
-router.post("/create", authMiddleware, createNewPlaylist);
 router.get("/allPlaylistsData", authMiddleware, getAllPlaylistsWithTracks);
-router.delete("/removePlaylist", authMiddleware, deletePlaylist);
+
+router.post("/create", authMiddleware, createNewPlaylist);
+router.post("/:trackId(\\d+)", authMiddleware, addTrack); // Only accepts numeric track IDs
+
 router.put("/renamePlaylist", authMiddleware, updatePlaylistName);
+
+router.delete("/removePlaylist", authMiddleware, deletePlaylist);
 
 export default router;

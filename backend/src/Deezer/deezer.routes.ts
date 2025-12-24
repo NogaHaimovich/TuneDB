@@ -3,11 +3,14 @@ import { getTopRatedSongs, getTopRatedArtists, getNewSongs, getAlbumDetails, get
 
 const router = Router();
 
+
 router.get("/topRatedSongs", getTopRatedSongs);
 router.get("/topRatedArtists", getTopRatedArtists);
 router.get("/newSongs", getNewSongs);
-router.get("/search",getSearchResults);
+
+router.get("/search", getSearchResults);
 router.get("/suggest", getSuggestions);
+
 router.get("/record", getRecordDetails);
 router.get("/artist", getArtistDetails);
 router.get("/album", getAlbumDetails);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, type FC } from "react";
 import "./styles.scss";
 import { getErrorMessage } from "../../../utils/get_error_message";
 import { useCreatePlaylistMutation, useFetchAllPlaylistsDataQuery } from "../../../store";
@@ -10,7 +10,7 @@ interface PlaylistSelectorProps {
   trackTitle?: string;
 }
 
-const PlaylistSelector: React.FC<PlaylistSelectorProps> = ({
+const PlaylistSelector: FC<PlaylistSelectorProps> = ({
   isOpen,
   onClose,
   onSelectPlaylist,
@@ -26,8 +26,6 @@ const PlaylistSelector: React.FC<PlaylistSelectorProps> = ({
   });
   const playlists= data?.playlists.map(playlist=> playlist.name) ?? []
   const error = rtkError ? getErrorMessage(rtkError) : null;
-
-  console.log(playlists)
 
 
   const handlePlaylistSelect = (playlistName: string) => {
