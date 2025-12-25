@@ -70,9 +70,6 @@ export const getSearchResults = async (req: Request, res: Response) => {
     const query = req.query.q as string;
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 25; 
-    if (!query) {
-      return res.status(400).json({ error: "Missing search query" });
-    }
 
     const data = await deezerService.getSearchResults(query, page, limit);
 
@@ -99,9 +96,6 @@ export const getSearchResults = async (req: Request, res: Response) => {
 export const getSuggestions = async (req: Request, res: Response) => {
   try {
     const query = req.query.q as string;
-    if (!query) {
-      return res.status(400).json({ error: "Missing search query" });
-    }
 
     const data = await deezerService.getSuggestions(query);
     res.json(data); 
@@ -114,9 +108,6 @@ export const getSuggestions = async (req: Request, res: Response) => {
 export const getRecordDetails = async (req: Request, res: Response) => {
   try {
     const record_id = req.query.id as string;
-    if (!record_id) {
-      return res.status(400).json({ error: "Missing record id" });
-    }
 
     const track = await deezerService.getRecordDetails(record_id);
 
@@ -155,9 +146,6 @@ export const getRecordDetails = async (req: Request, res: Response) => {
 export const getArtistDetails = async (req: Request, res: Response) => {
   try {
     const artist_id = req.query.id as string;
-    if (!artist_id) {
-      return res.status(400).json({ error: "Missing artist id" });
-    }
 
     const artist_data = await deezerService.getArtistData(artist_id);
     const artist_songs = await deezerService.getArtistSongs(artist_id);
@@ -186,9 +174,6 @@ export const getArtistDetails = async (req: Request, res: Response) => {
 export const getAlbumDetails = async (req: Request, res: Response) => {
   try{
     const album_id = req.query.id as string;
-    if(!album_id){
-      return res.status(400).json({error: "Missing album id"})
-    }
 
     const album_data = await deezerService.getAlbumData(album_id);
     const simplifiedTracks = album_data.tracks?.data.map((track: { id: number; title: string; duration?: number; preview?: string; explicit_lyrics?: boolean }) => ({

@@ -1,4 +1,3 @@
-// User and authentication related interfaces
 
 export interface SignInForm {
   email: string;

@@ -37,17 +37,13 @@ API and data fetching related interfaces:
 ## Usage Examples
 
 ```typescript
-// Import specific types
 import type { Song, Artist } from '../types/music';
 import type { UserPayload } from '../types/user';
 import type { CardProps } from '../types/components';
 
-// Import from main index (recommended)
 import type { Song, UserPayload, CardProps } from '../types';
 
-// Use in components
 const MyComponent: React.FC<{ song: Song }> = ({ song }) => {
-  // Component logic
 };
 ```
 

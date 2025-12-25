@@ -17,17 +17,9 @@ export const getAllPlaylists = async (req: Request, res: Response) => {
 
 export const addTrack = async (req: Request, res: Response) => {
   try {
-    const trackId = req.params.trackId;
+    const trackId = req.params.trackId as string;
     const { playlistId, title, artist, album, image } = req.body;
     const userId = req.user!.id;
-
-    if (!trackId) {
-      return res.status(400).json({ error: "trackId parameter is required" });
-    }
-
-    if (!playlistId) {
-      return res.status(400).json({ error: "Playlist ID is required" });
-    }
 
     const updatedPlaylist = await addTrackToPlaylist(userId, playlistId, {
       trackId,
@@ -48,10 +40,6 @@ export const createNewPlaylist = async (req: Request, res: Response) => {
   try {
     const { playlistName } = req.body;
     const userId = req.user!.id;
-
-    if (!playlistName) {
-      return res.status(400).json({ error: "Playlist name is required" });
-    }
 
     const newPlaylist = await createPlaylist(userId, playlistName);
     return res.status(201).json(newPlaylist);
@@ -89,10 +77,6 @@ export const deletePlaylist = async (req: Request, res: Response) => {
     const { playlistId } = req.body;
     const userId = req.user!.id;
 
-    if (!playlistId) {
-      return res.status(400).json({ error: "Playlist ID is required" });
-    }
-
     const result = await removePlaylist(userId, playlistId);
     return res.status(200).json(result);
   } catch (err: unknown) {
@@ -105,10 +89,6 @@ export const updatePlaylistName = async (req: Request, res: Response) => {
   try {
     const { playlistId, newName } = req.body;
     const userId = req.user!.id;
-
-    if (!playlistId || !newName) {
-      return res.status(400).json({ error: "Playlist ID and new name are required" });
-    }
 
     const result = await renamePlaylist(userId, playlistId, newName);
     return res.status(200).json(result);

@@ -44,12 +44,10 @@ app.use("/api/deezer", deezerRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/playlist", playlistRoutes);
 
-// 404 handler for undefined routes
 app.use((req, res, next) => {
   next(new AppError(`Route ${req.originalUrl} not found`, 404));
 });
 
-// Global error handler (must be last middleware)
 app.use(errorHandler);
 
 app.listen(PORT, () => {
