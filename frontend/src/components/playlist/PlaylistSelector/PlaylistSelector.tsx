@@ -21,9 +21,7 @@ const PlaylistSelector: FC<PlaylistSelectorProps> = ({
   const [creating, setCreating] = useState(false);
   const [createPlaylistMutation] = useCreatePlaylistMutation();
 
-  const { data, error: rtkError, isLoading, refetch } = useFetchAllPlaylistsDataQuery(undefined, {
-    skip: !isOpen
-  });
+  const { data, error: rtkError, isLoading} = useFetchAllPlaylistsDataQuery(undefined, {skip: !isOpen});
   const playlists = data?.playlists ?? [];
   const error = rtkError ? getErrorMessage(rtkError) : null;
 

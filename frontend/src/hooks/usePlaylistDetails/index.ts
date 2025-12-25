@@ -11,7 +11,11 @@ const usePlaylistDetails = (): UsePlaylistDetailReturn => {
 
     const playlist = useMemo(() => {
         if (!data?.playlists || !id) return null;
-        return data.playlists.find(p => p.id === id) || null;
+        let found = data.playlists.find(p => p.id === id);
+        if (!found && id === "Favorites") {
+            found = data.playlists.find(p => p.name === "Favorites");
+        }
+        return found || null;
     }, [data, id]);
 
     const error = useMemo(() => {
