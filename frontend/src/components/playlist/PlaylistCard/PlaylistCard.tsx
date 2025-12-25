@@ -6,13 +6,14 @@ import Button from "../../common/Button/Button";
 import Card from "../../common/Card/Card";
 
 const PlaylistCard = ({playlist, onEdit, onDelete, onViewMore}: PlaylistCardProps) =>{
-    const visibleTracks = playlist.tracks.slice(0, 5); 
+    const visibleTracks = playlist.tracks.slice(0, 5);
+    const playlistId = playlist.id || "";
     return (
-        <div key={playlist.name} className="playlist_card">
+        <div key={playlistId} className="playlist_card">
         <div className="playlist_header">
             <div className="playlist_title_row">
             <Link
-                to={`/playlist/${encodeURIComponent(playlist.name)}`}
+                to={`/playlist/${playlistId}`}
                 className="playlist_name"
             >
                 {playlist.name}
@@ -21,7 +22,7 @@ const PlaylistCard = ({playlist, onEdit, onDelete, onViewMore}: PlaylistCardProp
             <button
                 className="edit_playlist_btn"
                 title="Edit playlist name"
-                onClick={() => onEdit?.(playlist.name)}
+                onClick={() => onEdit?.(playlistId, playlist.name)}
             >
                 🖊️
             </button>
@@ -51,7 +52,7 @@ const PlaylistCard = ({playlist, onEdit, onDelete, onViewMore}: PlaylistCardProp
                 <Button
                     variant="primary"
                     className="see_more_btn"
-                    onClick={() => onViewMore?.(playlist.name)}
+                    onClick={() => onViewMore?.(playlistId)}
                 >
                     See More
                 </Button>
@@ -60,7 +61,7 @@ const PlaylistCard = ({playlist, onEdit, onDelete, onViewMore}: PlaylistCardProp
                 <Button
                 variant="danger"
                 className="delete_playlist_btn"
-                onClick={() => onDelete?.(playlist.name)}
+                onClick={() => onDelete?.(playlistId, playlist.name)}
                 >
                 Delete Playlist
                 </Button>

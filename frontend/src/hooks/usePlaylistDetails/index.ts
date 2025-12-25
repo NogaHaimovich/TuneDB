@@ -6,15 +6,13 @@ import { useFetchAllPlaylistsDataQuery } from "../../store";
 
 
 const usePlaylistDetails = (): UsePlaylistDetailReturn => {
-    const { name } = useParams<{ name: string }>();
+    const { id } = useParams<{ id: string }>();
     const { data, isLoading, error: queryError, refetch } = useFetchAllPlaylistsDataQuery();
 
     const playlist = useMemo(() => {
-        if (!data?.playlists) return null;
-        return data.playlists.find(p => 
-            p.name === decodeURIComponent(name || '')
-        ) || null;
-    }, [data, name]);
+        if (!data?.playlists || !id) return null;
+        return data.playlists.find(p => p.id === id) || null;
+    }, [data, id]);
 
     const error = useMemo(() => {
         if (queryError) {

@@ -65,13 +65,13 @@ const playlistApi = createApi({
 
     addToPlaylist: builder.mutation<
       AddToPlaylistResponse,
-      { trackId: string; trackData: Omit<AddToPlaylistRequest, 'trackId'>; playlistName?: string }
+      { trackId: string; trackData: Omit<AddToPlaylistRequest, 'trackId'>; playlistId: string }
     >({
-      query: ({ trackId, trackData, playlistName = 'favorite' }) => ({
+      query: ({ trackId, trackData, playlistId }) => ({
         url: `/playlist/${trackId}`,
         method: "POST",
         body: {
-          playlistName,
+          playlistId,
           ...trackData,
         },
       }),
@@ -79,10 +79,10 @@ const playlistApi = createApi({
     }),
 
     removePlaylist: builder.mutation<RemovePlaylistResponse, string>({
-      query: (playlistName) => ({
+      query: (playlistId) => ({
         url: '/playlist/removePlaylist',
         method: 'DELETE',
-        body: { playlistName },
+        body: { playlistId },
       }),
       invalidatesTags: ["Playlists"]
     }),
@@ -96,12 +96,12 @@ const playlistApi = createApi({
       invalidatesTags: ["Playlists"]
     }),
 
-    renamePlaylist: builder.mutation<RenamePlaylistResponse, { oldName: string; newName: string }>({
-      query: ({ oldName, newName }) => ({
+    renamePlaylist: builder.mutation<RenamePlaylistResponse, { playlistId: string; newName: string }>({
+      query: ({ playlistId, newName }) => ({
         url: '/playlist/renamePlaylist',
         method: 'PUT',
         body: {
-          oldName,
+          playlistId,
           newName
         }
       }),

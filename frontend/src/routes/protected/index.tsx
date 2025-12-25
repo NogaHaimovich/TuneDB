@@ -9,7 +9,7 @@ const ProtectedRoutes = () => {
   return [
       <Route 
         key="playlist"
-        path="/playlist/:name" 
+        path="/playlist/:id" 
         element={
           <ProtectedRoute>
             <PlaylistDetailPage />

@@ -6,7 +6,7 @@ import { useCreatePlaylistMutation, useFetchAllPlaylistsDataQuery } from "../../
 interface PlaylistSelectorProps {
   isOpen: boolean;
   onClose: () => void;
-  onSelectPlaylist: (playlistName: string) => void;
+  onSelectPlaylist: (playlistId: string) => void;
   trackTitle?: string;
 }
 
@@ -24,12 +24,12 @@ const PlaylistSelector: FC<PlaylistSelectorProps> = ({
   const { data, error: rtkError, isLoading, refetch } = useFetchAllPlaylistsDataQuery(undefined, {
     skip: !isOpen
   });
-  const playlists= data?.playlists.map(playlist=> playlist.name) ?? []
+  const playlists = data?.playlists ?? [];
   const error = rtkError ? getErrorMessage(rtkError) : null;
 
 
-  const handlePlaylistSelect = (playlistName: string) => {
-    onSelectPlaylist(playlistName);
+  const handlePlaylistSelect = (playlistId: string) => {
+    onSelectPlaylist(playlistId);
     onClose();
   };
 
@@ -68,15 +68,19 @@ const PlaylistSelector: FC<PlaylistSelectorProps> = ({
           ) : (
             <>
               <div className="playlist-list">
-                {playlists.map((playlist) => (
-                  <button
-                    key={playlist}
-                    className="playlist-item"
-                    onClick={() => handlePlaylistSelect(playlist)}
-                  >
-                    <span className="playlist-name">{playlist}</span>
-                  </button>
-                ))}
+                {playlists.map((playlist) => {
+                  const playlistId = playlist.id;
+                  if (!playlistId) return null;
+                  return (
+                    <button
+                      key={playlistId}
+                      className="playlist-item"
+                      onClick={() => handlePlaylistSelect(playlistId)}
+                    >
+                      <span className="playlist-name">{playlist.name}</span>
+                    </button>
+                  );
+                })}
               </div>
               
               {showCreateForm ? (

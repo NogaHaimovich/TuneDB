@@ -110,6 +110,7 @@ export interface PlaylistTrack {
 }
 
 export interface Playlist {
+  id?: string;
   name: string;
   tracks: PlaylistTrack[];
 }

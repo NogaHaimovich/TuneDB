@@ -7,7 +7,8 @@ import { useFetchAllPlaylistsDataQuery, useRemovePlaylistMutation, useRenamePlay
 
 const usePlaylistManager = (): UsePlaylistManagerReturn => {
   const [isEditPopupOpen, setIsEditPopupOpen] = useState<boolean>(false);
-  const [editingPlaylist, setEditingPlaylist] = useState<string | null>(null);
+  const [editingPlaylist, setEditingPlaylist] = useState<string | null>(null); 
+  const [editingPlaylistName, setEditingPlaylistName] = useState<string>("");
   const [newPlaylistName, setNewPlaylistName] = useState<string>("");
   const [popupError, setPopupError] = useState<string>("");
 
@@ -20,19 +21,20 @@ const usePlaylistManager = (): UsePlaylistManagerReturn => {
 
   const error = rtkError ? getErrorMessage(rtkError) : null;
 
-  const handleEdit = useCallback((playlistName: string) => {
-    setEditingPlaylist(playlistName);
+  const handleEdit = useCallback((playlistId: string, playlistName: string) => {
+    setEditingPlaylist(playlistId);
+    setEditingPlaylistName(playlistName);
     setNewPlaylistName(playlistName);
     setIsEditPopupOpen(true);
     setPopupError("");
   }, []);
 
   const handleDelete = useCallback(
-    async (playlistName: string) => {
+    async (playlistId: string, playlistName: string) => {
       if (!confirm(`Are you sure you want to delete "${playlistName}"?`)) return;
 
       try {
-        removePlaylistMutation(playlistName);
+        removePlaylistMutation(playlistId);
         toast.success("Playlist removed successfully");
       } catch (err: unknown) {
         const error_message = getErrorMessage(err);
@@ -40,12 +42,12 @@ const usePlaylistManager = (): UsePlaylistManagerReturn => {
         console.error(`Error removing ${playlistName}:`, error_message);
       }
     },
-    [refetch]
+    [removePlaylistMutation]
   );
 
   const handleViewMore = useCallback(
-    (playlistName: string) => {
-      navigate(`/playlist/${encodeURIComponent(playlistName)}`);
+    (playlistId: string) => {
+      navigate(`/playlist/${playlistId}`);
     },
     [navigate]
   );
@@ -57,6 +59,7 @@ const usePlaylistManager = (): UsePlaylistManagerReturn => {
   const handleCloseEditPopup = useCallback(() => {
     setIsEditPopupOpen(false);
     setEditingPlaylist(null);
+    setEditingPlaylistName("");
     setNewPlaylistName("");
     setPopupError("");
   }, []);
@@ -69,13 +72,13 @@ const usePlaylistManager = (): UsePlaylistManagerReturn => {
 
     if (!editingPlaylist) return;
 
-    if (editingPlaylist.trim() === newPlaylistName.trim()) {
+    if (editingPlaylistName.trim() === newPlaylistName.trim()) {
       handleCloseEditPopup();
       return;
     }
 
     try {
-      renamePlaylistMutation({oldName:editingPlaylist, newName:newPlaylistName})
+      renamePlaylistMutation({playlistId: editingPlaylist, newName: newPlaylistName})
       handleCloseEditPopup();
       toast.success("Playlist renamed successfully");
     } catch (err: unknown) {
@@ -83,7 +86,7 @@ const usePlaylistManager = (): UsePlaylistManagerReturn => {
       setPopupError(error_message || "Error renaming playlist");
       console.error("Rename playlist error:", error_message);
     }
-  }, [editingPlaylist, newPlaylistName, refetch, handleCloseEditPopup]);
+  }, [editingPlaylist, editingPlaylistName, newPlaylistName, renamePlaylistMutation, handleCloseEditPopup]);
 
   const refreshPlaylists = useCallback(async () => {
     await refetch();

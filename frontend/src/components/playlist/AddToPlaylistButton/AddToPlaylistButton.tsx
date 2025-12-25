@@ -5,7 +5,7 @@ import "./styles.scss";
 import AddToPlaylistIcon from "../../../assets/addToPlaylist.svg?react";
 import { isAuthenticated } from "../../../utils/auth";
 import PlaylistSelector from "../PlaylistSelector/PlaylistSelector";
-import { useAddToPlaylistMutation } from "../../../store";
+import { useAddToPlaylistMutation, useFetchAllPlaylistsDataQuery } from "../../../store";
 
 interface AddToPlaylistButtonProps {
   trackId: string;
@@ -25,6 +25,7 @@ const AddToPlaylistButton: React.FC<AddToPlaylistButtonProps> = ({
   const [isPlaylistSelectorOpen, setIsPlaylistSelectorOpen] = useState(false);
   const [lastPlaylistName, setLastPlaylistName] = useState<string>("");
   const [addToPlaylist, { isSuccess, isError, error }] = useAddToPlaylistMutation();
+  const { data } = useFetchAllPlaylistsDataQuery();
 
   const handleClick = () => {
     if (!isAuthenticated()) {
@@ -35,7 +36,9 @@ const AddToPlaylistButton: React.FC<AddToPlaylistButtonProps> = ({
     setIsPlaylistSelectorOpen(true);
   };
 
-  const handlePlaylistSelect = (playlistName: string) => {
+  const handlePlaylistSelect = (playlistId: string) => {
+    const playlist = data?.playlists.find(p => p.id === playlistId);
+    const playlistName = playlist?.name || "";
     setLastPlaylistName(playlistName);
     addToPlaylist({
       trackId,
@@ -45,7 +48,7 @@ const AddToPlaylistButton: React.FC<AddToPlaylistButtonProps> = ({
         album,
         image
       },
-      playlistName
+      playlistId
     });
   };
 

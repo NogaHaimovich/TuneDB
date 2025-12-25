@@ -9,6 +9,10 @@ const trackSchema = new mongoose.Schema({
 });
 
 const playlistSchema = new mongoose.Schema({
+    _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        default: () => new mongoose.Types.ObjectId(),
+    },
     name: { 
         type: String,
         required: true, 

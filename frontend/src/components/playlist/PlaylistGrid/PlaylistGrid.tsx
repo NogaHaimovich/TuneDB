@@ -23,16 +23,19 @@ const PlaylistGrid = ({
   return (
     <div className="playlist_grid">
       <div className="playlists_list">
-        {playlists.map((playlist) => (
-          <PlaylistCard
-            key={playlist.name}
-            playlist={playlist}
-            onEdit={onEdit}
-            onDelete={onDelete}
-            onViewMore={onViewMore}
-            showActions={showActions}
-          />
-        ))}
+        {playlists.map((playlist) => {
+          const playlistId = playlist.id || playlist.name;
+          return (
+            <PlaylistCard
+              key={playlistId}
+              playlist={playlist}
+              onEdit={onEdit}
+              onDelete={onDelete}
+              onViewMore={onViewMore}
+              showActions={showActions}
+            />
+          );
+        })}
       </div>
     </div>
   );

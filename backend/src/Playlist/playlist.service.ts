@@ -18,12 +18,15 @@ const getUserPlaylists = async (userId: string) => {
     await user.save();
   }
 
-  return (user.playlists as Playlist[]).map(playlist => playlist.name);
+  return (user.playlists as Playlist[]).map(playlist => ({
+    id: (playlist as any)._id?.toString() || (playlist as any).id,
+    name: playlist.name
+  }));
 };
 
 const addTrackToPlaylist = async (
   userId: string,
-  playlistName: string,
+  playlistId: string,
   track: {
     trackId: string;
     title?: string;
@@ -38,21 +41,13 @@ const addTrackToPlaylist = async (
 
   if (!user.playlists) user.playlists = [] as Playlist[];
 
-
-  let playlist = (user.playlists as Playlist[]).find((p) => p.name === playlistName);
-
-  if (!playlist) {
-    (user.playlists as Playlist[]).push({
-      name: playlistName,
-      tracks: []
-    });
-    playlist = (user.playlists as Playlist[])[(user.playlists as Playlist[]).length - 1];
-  } else {
-    console.log("Found existing playlist:", playlist);
-  }
+  const playlistObjectId = new mongoose.Types.ObjectId(playlistId);
+  let playlist = (user.playlists as any[]).find((p) => 
+    p._id?.toString() === playlistId || p.id === playlistId || p._id?.equals(playlistObjectId)
+  );
 
   if (!playlist) {
-    throw new Error("Failed to create or find playlist");
+    throw new Error("Playlist not found");
   }
 
   if (!playlist.tracks) playlist.tracks = [] as PlaylistTrack[];
@@ -64,7 +59,10 @@ const addTrackToPlaylist = async (
 
   await user.save();
 
-  return playlist;
+  return {
+    ...playlist,
+    id: playlist._id?.toString() || playlist.id
+  };
 };
 
 const createPlaylist = async (userId: string, playlistName: string) => {
@@ -73,8 +71,6 @@ const createPlaylist = async (userId: string, playlistName: string) => {
   if (!user) throw new Error("User not found");
 
   if (!user.playlists) user.playlists = [] as Playlist[];
-
-
 
   const existingPlaylist = (user.playlists as Playlist[]).find((p) => p.name === playlistName);
   if (existingPlaylist) throw new Error("Playlist already exists");
@@ -86,21 +82,28 @@ const createPlaylist = async (userId: string, playlistName: string) => {
 
   (user.playlists as Playlist[]).push(newPlaylist as Playlist);
   await user.save();
-  return (user.playlists as Playlist[])[(user.playlists as Playlist[]).length - 1];
+  const createdPlaylist = (user.playlists as any[])[(user.playlists as Playlist[]).length - 1];
+  return {
+    ...createdPlaylist,
+    id: createdPlaylist._id?.toString() || createdPlaylist.id
+  };
 };
 
-const getPlaylistSongs = async (userId: string, playlistName: string) => {
+const getPlaylistSongs = async (userId: string, playlistId: string) => {
   const objectId = new mongoose.Types.ObjectId(userId);
   const user = await User.findById(objectId).select("playlists") as (UserWithPlaylists & Savable | null);
   if (!user) throw new Error("User not found");
 
-  const playlist = (user.playlists as Playlist[] | undefined)?.find((p) => p.name === playlistName);
+  const playlistObjectId = new mongoose.Types.ObjectId(playlistId);
+  const playlist = (user.playlists as any[] | undefined)?.find((p) => 
+    p._id?.toString() === playlistId || p.id === playlistId || p._id?.equals(playlistObjectId)
+  );
   if (!playlist) throw new Error("Playlist not found");
 
   return playlist.tracks || [];
 };
 
-const removePlaylist = async (userId: string, playlistName: string) => {
+const removePlaylist = async (userId: string, playlistId: string) => {
   const objectId = new mongoose.Types.ObjectId(userId);
   const user = await User.findById(objectId) as (UserWithPlaylists & Savable | null);
   if (!user) throw new Error("User not found");
@@ -109,8 +112,11 @@ const removePlaylist = async (userId: string, playlistName: string) => {
     throw new Error("User has no playlists");
   }
 
+  const playlistObjectId = new mongoose.Types.ObjectId(playlistId);
   const initialLength = user.playlists.length;
-  user.playlists = (user.playlists as Playlist[]).filter((p: Playlist) => p.name !== playlistName);
+  user.playlists = (user.playlists as any[]).filter((p: any) => 
+    !(p._id?.toString() === playlistId || p.id === playlistId || p._id?.equals(playlistObjectId))
+  );
 
   if (user.playlists.length === initialLength) {
     throw new Error("Playlist not found");
@@ -121,7 +127,7 @@ const removePlaylist = async (userId: string, playlistName: string) => {
   return { message: "Playlist deleted successfully" };
 };
 
-const renamePlaylist = async (userId: string, oldName:string, newName:string) => {
+const renamePlaylist = async (userId: string, playlistId: string, newName: string) => {
   const objectId = new mongoose.Types.ObjectId(userId);
   const user = await User.findById(objectId) as (UserWithPlaylists & Savable | null);
   if (!user) throw new Error("User not found");
@@ -130,14 +136,16 @@ const renamePlaylist = async (userId: string, oldName:string, newName:string) =>
     throw new Error("User has no playlists");
   }
 
-  const playlist = (user.playlists as Playlist[]).find((p: Playlist) => p.name === oldName);
-  if (!playlist) throw new Error("playlist not found")
+  const playlistObjectId = new mongoose.Types.ObjectId(playlistId);
+  const playlist = (user.playlists as any[]).find((p: any) => 
+    p._id?.toString() === playlistId || p.id === playlistId || p._id?.equals(playlistObjectId)
+  );
+  if (!playlist) throw new Error("Playlist not found");
 
   playlist.name = newName;
   await user.save();
 
   return { message: "Playlist renamed successfully" };
-
 }
 
 export { getUserPlaylists, addTrackToPlaylist, createPlaylist, getPlaylistSongs, removePlaylist, renamePlaylist};

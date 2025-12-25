@@ -9,7 +9,7 @@ router.get("/", authMiddleware, getAllPlaylists);
 router.get("/allPlaylistsData", authMiddleware, getAllPlaylistsWithTracks);
 
 router.post("/create", authMiddleware, createNewPlaylist);
-router.post("/:trackId(\\d+)", authMiddleware, addTrack); // Only accepts numeric track IDs
+router.post("/:trackId", authMiddleware, addTrack);
 
 router.put("/renamePlaylist", authMiddleware, updatePlaylistName);
 

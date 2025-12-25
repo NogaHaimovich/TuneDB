@@ -10,9 +10,9 @@ export interface UsePlaylistManagerReturn {
   newPlaylistName: string;
   popupError: string;
   
-  handleEdit: (playlistName: string) => void;
-  handleDelete: (playlistName: string) => void;
-  handleViewMore: (playlistName: string) => void;
+  handleEdit: (playlistId: string, playlistName: string) => void;
+  handleDelete: (playlistId: string, playlistName: string) => void;
+  handleViewMore: (playlistId: string) => void;
   handleNameChange: (value: string) => void;
   handleCloseEditPopup: () => void;
   handleSaveEdit: () => void;
