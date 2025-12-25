@@ -1,4 +1,4 @@
-import User from "../models/users.js";
+import User from "../models/users.model.js";
 import mongoose from "mongoose";
 import type { UserWithPlaylists, Playlist, PlaylistTrack } from "../types/types.js";
 

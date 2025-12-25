@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import mongoose from "mongoose";
-import User from "../models/users.js";
+import User from "../models/users.model.js";
 import { getErrorMessage } from "../utils.js";
 import { getUserPlaylists, addTrackToPlaylist, createPlaylist, getPlaylistSongs, removePlaylist, renamePlaylist } from "./playlist.service.js";
 
